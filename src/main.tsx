@@ -6,6 +6,8 @@ import "./index.css";
 import Landing from "./pages/Landing";
 import CheckUser from "./pages/CheckUser";
 import ChoosePlace from "./pages/ChoosePlace";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +17,8 @@ const router = createBrowserRouter([
       { index: true, element: <Landing /> },
       { path: "checkUser", element: <CheckUser /> },
       { path: "choosePlace", element: <ChoosePlace /> },
+      { path: "login", element: <Login /> },
+      { path: "signup", element: <Signup /> },
     ],
   },
 ]);
