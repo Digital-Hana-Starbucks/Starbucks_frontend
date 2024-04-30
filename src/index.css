@@ -1,5 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "nbg", "맑은 고딕", HelveticaNeue, DroidSans, Sans-serif,
+    Helvetica;
   line-height: 1.5;
   font-weight: 400;
 }
@@ -8,6 +13,7 @@ body {
   margin: 0;
   display: flex;
   place-items: center;
+  background-color: #d9d9d9;
   min-width: 320px;
   min-height: 100vh;
 }
