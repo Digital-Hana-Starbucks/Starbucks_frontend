@@ -1,10 +1,11 @@
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const CheckUser = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="flex flex-col justify-center items-center h-[90vh] gap-36 bg-starbucksBeige">
+    <section className="flex flex-col justify-center items-center h-[100vh] gap-36 bg-starbucksBeige">
       <img
         className="flex justify-center"
         src="./../../public/img/logo.png"
