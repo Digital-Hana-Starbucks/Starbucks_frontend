@@ -5,6 +5,7 @@ import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Landing from "./pages/Landing";
 import CheckUser from "./pages/CheckUser";
+import MenuPage from "./pages/MenuPage";
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Landing /> },
       { path: "checkUser", element: <CheckUser /> },
+      { path: "menu", element: <MenuPage /> },
     ],
   },
 ]);
