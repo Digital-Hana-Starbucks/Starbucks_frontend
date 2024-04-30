@@ -7,5 +7,12 @@ type MenuType = {
   menuDate: string;
   categoryIdx: number;
 };
+type BasketMenuType = {
+  basketIdx: number;
+  menuIdx: number;
+  orderDetailCount: number;
+  menuTemperature?: string | null;
+  menuSize?: string | null;
+};
 
-export default MenuType;
+export { MenuType, BasketMenuType };

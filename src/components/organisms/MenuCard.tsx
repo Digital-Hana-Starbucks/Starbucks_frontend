@@ -1,4 +1,4 @@
-const MenuSelectComp = () => {
+const MenuCard = () => {
   return (
     <div className="flex flex-row grid grid-cols-4 gap-2 bg-starbucksBeige h-[55vh] ">
       {/* 메뉴 버튼 영역 */}
@@ -9,4 +9,4 @@ const MenuSelectComp = () => {
   );
 };
 
-export default MenuSelectComp;
+export default MenuCard;

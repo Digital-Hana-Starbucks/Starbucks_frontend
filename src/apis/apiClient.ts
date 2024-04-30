@@ -2,7 +2,7 @@ import axios, { AxiosInstance } from "axios";
 import { menuApi } from "./interfaces/menuApi";
 import { API_BASE_URL } from "./url";
 import { getCookie } from "../utils/cookie";
-import MenuType from "../types/menu";
+import { MenuType } from "../types/menu";
 
 export class ApiClient implements menuApi {
   private static instance: ApiClient;

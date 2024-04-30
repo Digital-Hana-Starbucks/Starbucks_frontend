@@ -5,11 +5,12 @@ import {
   useContext,
   useReducer,
 } from "react";
+import { BasketMenuType } from "../types/menu";
 
 type BasketContextProp = {
-  basket: Menu[];
+  basket: BasketMenuType[];
   // 장바구니에 담는 함수
-  addBasket: (menu: Menu) => void;
+  addBasket: (menu: BasketMenuType) => void;
   // 장바구니에서 삭제하는 함수
   removeBasket: (basketIdx: number) => void;
   // 장바구니에서 개수 +1하는 함수
@@ -26,22 +27,25 @@ type ProviderProps = {
 type Action =
   | {
       type: "addBasket";
-      payload: Menu;
+      payload: BasketMenuType;
     }
   | { type: "removeBasket" | "plusMenu" | "minusMenu"; payload: number };
 
-const DefaultBasket: Menu[] = [];
+const DefaultBasket: BasketMenuType[] = [];
 
 const BasketContext = createContext<BasketContextProp>({
-  basket: [] as Menu[],
-  addBasket: (menu: Menu) => {},
+  basket: [] as BasketMenuType[],
+  addBasket: (menu: BasketMenuType) => {},
   removeBasket: (basketIdx: number) => {},
   plusMenu: (basketIdx: number) => {},
   minusMenu: (basketIdx: number) => {},
 });
 
-const reducer = (basketList: Menu[], { type, payload }: Action): Menu[] => {
-  let newer: Menu[] = [];
+const reducer = (
+  basketList: BasketMenuType[],
+  { type, payload }: Action,
+): BasketMenuType[] => {
+  let newer: BasketMenuType[] = [];
 
   switch (type) {
     case "addBasket":
@@ -95,7 +99,7 @@ const reducer = (basketList: Menu[], { type, payload }: Action): Menu[] => {
 export const BasketProvider = ({ children }: ProviderProps) => {
   const [basket, dispatch] = useReducer(reducer, DefaultBasket);
 
-  const addBasket = useCallback((menu: Menu) => {
+  const addBasket = useCallback((menu: BasketMenuType) => {
     dispatch({ type: "addBasket", payload: menu });
   }, []);
 
