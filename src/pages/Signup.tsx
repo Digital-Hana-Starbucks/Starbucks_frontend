@@ -8,14 +8,14 @@ const Signup = () => {
     <section className="relative flex flex-col justify-center items-center h-[100vh] gap-9 bg-starbucksBeige">
       <img
         className="absolute top-4 right-4"
-        src="./../../public/img/close.png"
+        src="/public/img/close.png"
         alt="close"
         onClick={() => navigate("/checkUser")}
       />
       <div>
         <img
           className="flex justify-center"
-          src="./../../public/img/logo.png"
+          src="/public/img/logo.png"
           alt="landing"
         />
         <p className="text-[32px] font-semibold">회원가입</p>

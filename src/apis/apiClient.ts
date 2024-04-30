@@ -3,8 +3,10 @@ import { menuApi } from "./interfaces/menuApi";
 import { API_BASE_URL } from "./url";
 import { getCookie } from "../utils/cookie";
 import MenuType from "../types/menu";
+import { LoginType } from "../types/user";
+import { loginApi } from "./interfaces/userApi";
 
-export class ApiClient implements menuApi {
+export class ApiClient implements menuApi, loginApi {
   private static instance: ApiClient;
   private axiosInstance: AxiosInstance;
 
@@ -23,6 +25,15 @@ export class ApiClient implements menuApi {
 
   static getInstance(): ApiClient {
     return this.instance || (this.instance = new this());
+  }
+
+  async login(user: LoginType) {
+    const response = await this.axiosInstance.request<void>({
+      method: "post",
+      url: `/users/login`,
+      data: user,
+    });
+    return response.data;
   }
 
   registerToken(newToken: string) {

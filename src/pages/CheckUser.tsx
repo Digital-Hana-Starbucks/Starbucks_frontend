@@ -6,11 +6,7 @@ const CheckUser = () => {
 
   return (
     <section className="flex flex-col justify-center items-center h-[100vh] gap-36 bg-starbucksBeige">
-      <img
-        className="flex justify-center"
-        src="./../../public/img/logo.png"
-        alt="landing"
-      />
+      <img className="flex justify-center" src="/img/logo.png" alt="landing" />
       <div className="flex gap-16">
         <button
           className="text-[32px] font-semibold text-white bg-starbucksGreen w-52 h-24 rounded-2xl"
