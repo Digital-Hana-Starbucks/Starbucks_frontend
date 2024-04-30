@@ -5,7 +5,7 @@ const ChoosePlace = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="relative flex flex-col justify-center items-center h-[90vh] gap-6 bg-starbucksBeige">
+    <section className="relative flex flex-col justify-center items-center h-[100vh] gap-6 bg-starbucksBeige">
       <img
         className="absolute top-4 right-4"
         src="./../../public/img/close.png"
