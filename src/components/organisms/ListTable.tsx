@@ -1,5 +1,5 @@
 import React from "react";
-import TableRow from "../molecules/TableRow";
+import TableRow from "../molecules/ListTableRow";
 
 interface Props {
   tableData: any[];
@@ -8,7 +8,12 @@ interface Props {
   onEdit?: (index: number) => void;
 }
 
-const Table: React.FC<Props> = ({ tableData, columns, onDelete, onEdit }) => {
+const ListTable: React.FC<Props> = ({
+  tableData,
+  columns,
+  onDelete,
+  onEdit,
+}) => {
   return (
     <table className="table-auto border-collapse w-full border p-2 m-2">
       <thead>
@@ -36,4 +41,4 @@ const Table: React.FC<Props> = ({ tableData, columns, onDelete, onEdit }) => {
   );
 };
 
-export default Table;
+export default ListTable;

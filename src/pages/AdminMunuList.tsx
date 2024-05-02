@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import MenuType from "../types/menu";
-import Table from "../components/organisms/Table";
 import { ApiClient } from "../apis/apiClient";
+import ListTable from "../components/organisms/ListTable";
 
 const columnsForMenu = ["번호", "이름", "가격", "이미지", "카테고리"];
 
@@ -23,6 +24,7 @@ const getCategory = (categoryIdx: number) => {
 };
 
 const AdminMenuList: React.FC = () => {
+  const navigate = useNavigate();
   // const [menus, setMenus] = useState<MenuType[]>([]);
   // useEffect(() => {
   //   ApiClient.getInstance()
@@ -91,7 +93,7 @@ const AdminMenuList: React.FC = () => {
   };
 
   const handleEdit = (index: number) => {
-    // Handle edit logic here
+    navigate(`/adminMenuEdit/${index}`);
     console.log(`Edit item at index ${index}`);
   };
 
@@ -106,7 +108,7 @@ const AdminMenuList: React.FC = () => {
             총 <p className="text-red-500 inline-block">{menus.length}</p>개의
             메뉴가 있습니다.
           </h2>
-          <Table
+          <ListTable
             tableData={menus.map((menu) => [
               menu.menuIdx,
               menu.menuName,

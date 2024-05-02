@@ -9,6 +9,7 @@ import ChoosePlace from "./pages/ChoosePlace";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import AdminMenuList from "./pages/AdminMunuList";
+import AdminMenuEdit from "./pages/AdminMenuEdit";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
       { path: "login", element: <Login /> },
       { path: "signup", element: <Signup /> },
       { path: "adminMenuList", element: <AdminMenuList /> },
+      { path: "adminMenuEdit/:idx", element: <AdminMenuEdit /> },
     ],
   },
 ]);
