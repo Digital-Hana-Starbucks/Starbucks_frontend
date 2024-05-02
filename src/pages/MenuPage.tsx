@@ -1,7 +1,25 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ApiClient } from "../apis/apiClient";
+import { MenuType } from "../types/menu";
+import { useQuery } from "react-query";
+import MenuCard from "../components/organisms/MenuCard";
+import Category from "../components/ui/Category";
 
 const MenuPage = () => {
+  const [categoryIdx, setCategoryIdx] = useState<number>(1);
   const navigate = useNavigate();
+  const { isLoading, data } = useQuery({
+    queryKey: ["menus", categoryIdx],
+    queryFn: () => {
+      const res = ApiClient.getInstance().getCategoryMenuList(categoryIdx);
+      return res;
+    },
+  });
+
+  const setCategoryIdxFunc = (idx: number) => {
+    setCategoryIdx(idx);
+  };
 
   return (
     <section className="h-[100vh]">
@@ -12,11 +30,19 @@ const MenuPage = () => {
           alt="banner"
         />
       </div>
-      <div className="flex flex-row grid grid-cols-4 gap-2 bg-starbucksBeige h-[55vh] ">
+      <div className="flex-row grid grid-cols-4 gap-2 bg-starbucksBeige h-[55vh] ">
         {/* 메뉴 버튼 영역 */}
-        <div>1공간차지</div>
+        <div>
+          <Category
+            categoryIdx={2}
+            categoryName={"홍길동"}
+            onClick={() => setCategoryIdxFunc(2)}
+          />
+        </div>
         {/* 메뉴 선택 영역 */}
-        <div className="col-span-3">3공간차지</div>
+        <div className="col-span-3">
+          <MenuCard data={data} />
+        </div>
       </div>
     </section>
   );

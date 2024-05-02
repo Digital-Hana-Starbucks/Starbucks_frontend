@@ -4,7 +4,7 @@ const Landing = () => {
   const navigate = useNavigate();
 
   return (
-    <section onClick={() => navigate("/mainPage")}>
+    <section onClick={() => navigate("/menu")}>
       <div className="flex justify-center items-center bg-starbucksGreen h-[75vh]">
         <img src="./../../public/img/logo.png" alt="landing" />
       </div>
