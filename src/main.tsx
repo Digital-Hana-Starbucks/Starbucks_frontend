@@ -8,6 +8,7 @@ import CheckUser from "./pages/CheckUser";
 import ChoosePlace from "./pages/ChoosePlace";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import AdminMenuList from "./pages/AdminMunuList";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
       { path: "choosePlace", element: <ChoosePlace /> },
       { path: "login", element: <Login /> },
       { path: "signup", element: <Signup /> },
+      { path: "adminMenuList", element: <AdminMenuList /> },
     ],
   },
 ]);
