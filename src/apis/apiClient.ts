@@ -30,7 +30,7 @@ export class ApiClient implements menuApi, loginApi {
   async login(user: LoginType) {
     const response = await this.axiosInstance.request<void>({
       method: "post",
-      url: `/users/login`,
+      url: "/users/login",
       data: user,
     });
     return response.data;
