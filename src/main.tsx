@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import AdminMenuList from "./pages/AdminMunuList";
 import AdminMenuEdit from "./pages/AdminMenuEdit";
+import AdminUserList from "./pages/AdminUserList";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,7 @@ const router = createBrowserRouter([
       { path: "signup", element: <Signup /> },
       { path: "adminMenuList", element: <AdminMenuList /> },
       { path: "adminMenuEdit/:idx", element: <AdminMenuEdit /> },
+      { path: "adminUserList", element: <AdminUserList /> },
     ],
   },
 ]);

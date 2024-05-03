@@ -8,9 +8,9 @@ interface Props {
 
 const TableRow: React.FC<Props> = ({ rowData, onDelete, onEdit }) => {
   return (
-    <tr>
+    <tr className="text-xs">
       {rowData.map((cellData, index) => (
-        <td key={index} className="border p-2">
+        <td key={index} className="border p-2 ">
           {typeof cellData === "string" && cellData.startsWith("http") ? (
             <img src={cellData} alt="menu" className="h-16 w-16" />
           ) : (
@@ -18,7 +18,7 @@ const TableRow: React.FC<Props> = ({ rowData, onDelete, onEdit }) => {
           )}
         </td>
       ))}
-      <td className="border p-2">
+      <td className="border p-2 ">
         {onEdit && (
           <TableButton
             className="bg-blue-500 hover:bg-blue-700 text-white font py-1 px-2 rounded"
@@ -28,7 +28,7 @@ const TableRow: React.FC<Props> = ({ rowData, onDelete, onEdit }) => {
           </TableButton>
         )}
       </td>
-      <td className="border p-2">
+      <td className="border p-2 ">
         {onDelete && (
           <TableButton
             className="bg-red-500 hover:bg-red-700 text-white font py-1 px-2 rounded"

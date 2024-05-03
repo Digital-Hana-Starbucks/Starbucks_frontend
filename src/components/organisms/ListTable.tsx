@@ -17,7 +17,7 @@ const ListTable: React.FC<Props> = ({
   return (
     <table className="table-auto border-collapse w-full border p-2 m-2">
       <thead>
-        <tr>
+        <tr className="text-sm">
           {columns.map((column, index) => (
             <th className="border p-2" key={index}>
               {column}

@@ -99,12 +99,12 @@ const AdminMenuList: React.FC = () => {
 
   return (
     <div>
-      <h1 className="text-3xl m-2">상품 목록</h1>
+      <h1 className="text-2xl m-2">상품 목록</h1>
       {menus.length === 0 || menus == null ? (
         <p>메뉴가 없습니다</p>
       ) : (
         <div className="mx-auto p-4 max-w-screen-lg flex flex-col items-start">
-          <h2 className="m-2">
+          <h2 className="m-2 text-sm">
             총 <p className="text-red-500 inline-block">{menus.length}</p>개의
             메뉴가 있습니다.
           </h2>
