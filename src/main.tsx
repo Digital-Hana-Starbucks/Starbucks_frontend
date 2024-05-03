@@ -12,6 +12,8 @@ import AdminMenuList from "./pages/AdminMunuList";
 import AdminMenuEdit from "./pages/AdminMenuEdit";
 import AdminUserList from "./pages/AdminUserList";
 import AdminUserEdit from "./pages/AdminUserEdit";
+import AdminOrderList from "./pages/AdminOrderList";
+import AdminOrderEdit from "./pages/AdminOrderEdit";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +29,8 @@ const router = createBrowserRouter([
       { path: "adminMenuEdit/:idx", element: <AdminMenuEdit /> },
       { path: "adminUserList", element: <AdminUserList /> },
       { path: "adminUserEdit/:idx", element: <AdminUserEdit /> },
+      { path: "adminOrderList", element: <AdminOrderList /> },
+      { path: "adminOrderEdit/:idx", element: <AdminOrderEdit /> },
     ],
   },
 ]);
