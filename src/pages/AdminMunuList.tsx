@@ -99,7 +99,6 @@ const AdminMenuList: React.FC = () => {
 
   return (
     <div>
-      <h1 className="text-2xl m-2">상품 목록</h1>
       {menus.length === 0 || menus == null ? (
         <p>메뉴가 없습니다</p>
       ) : (

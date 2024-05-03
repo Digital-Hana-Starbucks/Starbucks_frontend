@@ -2,13 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ListTable from "../components/organisms/ListTable";
 
-const columnsForOrder = [
-  "번호",
-  "주문코드",
-  "주문총금액",
-  "주문상태",
-  "주문일시",
-];
+const columnsForOrder = ["번호", "주문코드", "총금액", "주문상태", "주문일시"];
 
 const AdminOrderList: React.FC = () => {
   const navigate = useNavigate();
@@ -45,7 +39,6 @@ const AdminOrderList: React.FC = () => {
 
   return (
     <div>
-      <h1 className="text-2xl m-2">주문 목록</h1>
       {orders.length === 0 || orders == null ? (
         <p>주문목록이 없습니다</p>
       ) : (

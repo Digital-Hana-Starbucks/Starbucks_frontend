@@ -52,7 +52,6 @@ const AdminUserList: React.FC = () => {
 
   return (
     <div>
-      <h1 className="text-2xl m-2">상품 목록</h1>
       {users.length === 0 || users == null ? (
         <p>회원목록이 없습니다</p>
       ) : (

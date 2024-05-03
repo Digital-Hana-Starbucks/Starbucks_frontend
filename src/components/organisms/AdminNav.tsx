@@ -7,7 +7,7 @@ const AdminNav: React.FC<{
   onChange: () => void;
 }> = ({ id, label, checked, onChange }) => {
   return (
-    <div className="admin-nav-item flex mr-4">
+    <div>
       <input
         type="radio"
         id={id}
@@ -18,10 +18,10 @@ const AdminNav: React.FC<{
         onChange={onChange}
       />
       <label
-        className={`admin-nav-label inline-block py-2 px-4 rounded-lg cursor-pointer ${
+        className={`inline-block py-2 px-4 rounded-lg cursor-pointer text-sm ${
           checked
-            ? "bg-green-500 text-white"
-            : "bg-white text-green-700 border border-green-500"
+            ? "bg-starbucksGreen text-white"
+            : "bg-white text-starbucksGreen border border-starbucksGreen"
         }`}
         htmlFor={id}
       >
