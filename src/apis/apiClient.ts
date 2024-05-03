@@ -29,6 +29,14 @@ export class ApiClient implements menuApi {
     return response.data;
   }
 
+  async deleteMenu(menuIdx: number) {
+    const response = await this.axiosInstance.request<void>({
+      method: "delete",
+      url: `/products/admin/${menuIdx}`,
+    });
+    return response.data;
+  }
+
   static getInstance(): ApiClient {
     return this.instance || (this.instance = new this());
   }

@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import MenuType from "../types/menu";
 import { ApiClient } from "../apis/apiClient";
 import ListTable from "../components/organisms/ListTable";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 
 const columnsForMenu = ["번호", "이름", "가격", "이미지", "카테고리"];
 
@@ -27,17 +27,29 @@ const getCategory = (categoryIdx: number) => {
 const AdminMenuList: React.FC = () => {
   const navigate = useNavigate();
 
-  const { isLoading, data } = useQuery({
+  const { isLoading, data, refetch } = useQuery<MenuType[]>({
     queryKey: ["menus"],
     queryFn: () => {
-      const res = ApiClient.getInstance().getMenuList();
-      return res;
+      return ApiClient.getInstance().getMenuList();
     },
   });
 
+  const deleteMenuMutation = useMutation(
+    (index: number) => ApiClient.getInstance().deleteMenu(index),
+    {
+      onSuccess: () => {
+        alert("삭제 완료");
+      },
+    },
+  );
+
   const handleDelete = (index: number) => {
-    // Handle delete logic here
-    console.log(`Delete item at index ${index}`);
+    const menuIdx = data![index].menuIdx;
+    if (menuIdx !== undefined) {
+      deleteMenuMutation.mutate(menuIdx);
+    } else {
+      console.error(`User index not found for index ${index}`);
+    }
   };
 
   const handleEdit = (index: number) => {
@@ -51,7 +63,9 @@ const AdminMenuList: React.FC = () => {
 
   return (
     <div>
-      {data?.length === 0 || data == null ? (
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : data && data.length === 0 ? (
         <p>메뉴가 없습니다</p>
       ) : (
         <div className="mx-auto p-4 max-w-screen-lg flex flex-col items-start">
@@ -60,7 +74,7 @@ const AdminMenuList: React.FC = () => {
             메뉴가 있습니다.
           </h2>
           <ListTable
-            tableData={data?.map((menu) => [
+            tableData={data!.map((menu) => [
               menu.menuIdx,
               menu.menuName,
               menu.menuPrice,
