@@ -9,6 +9,7 @@ import { CategoryType } from "../types/category";
 const MenuPage = () => {
   const [categoryIdx, setCategoryIdx] = useState<number>(1);
   const [categoryList, setCategoryList] = useState<CategoryType[]>([]);
+  const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigate();
   const { isLoading, data } = useQuery({
     queryKey: ["menus", categoryIdx],

@@ -10,6 +10,7 @@ type MenuType = {
 type BasketMenuType = {
   basketIdx: number;
   menuIdx: number;
+  menuPrice: number;
   orderDetailCount: number;
   menuTemperature?: string | null;
   menuSize?: string | null;

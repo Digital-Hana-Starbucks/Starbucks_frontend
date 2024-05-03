@@ -9,6 +9,9 @@ interface IProps {
 const MenuCard: FC<IProps> = ({ data }) => {
   return (
     <div>
+      {/* <div className="relative">
+        <div className="absolute top-5">확인용</div>
+      </div> */}
       <ul className="flex-row grid grid-cols-3 gap-2 bg-starbucksBeige h-[55vh] overflow-y-scroll">
         {data?.map((menu: MenuType) => (
           <li key={menu.menuIdx}>
@@ -17,6 +20,7 @@ const MenuCard: FC<IProps> = ({ data }) => {
               menuName={menu.menuName}
               menuImage={menu.menuImage}
               menuPrice={menu.menuPrice}
+              categoryIdx={menu.categoryIdx}
             />
           </li>
         ))}
