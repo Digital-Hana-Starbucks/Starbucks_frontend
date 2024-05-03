@@ -3,6 +3,7 @@ import { menuApi } from "./interfaces/menuApi";
 import { API_BASE_URL } from "./url";
 import { getCookie } from "../utils/cookie";
 import { MenuType } from "../types/menu";
+import { CategoryType } from "../types/category";
 
 export class ApiClient implements menuApi {
   private static instance: ApiClient;
@@ -24,6 +25,13 @@ export class ApiClient implements menuApi {
     const response = await this.axiosInstance.request<MenuType[]>({
       method: "get",
       url: `/products/category/${categoryIdx}`,
+    });
+    return response.data;
+  }
+  async getCategoryList() {
+    const response = await this.axiosInstance.request<CategoryType[]>({
+      method: "get",
+      url: `/products/category`,
     });
     return response.data;
   }

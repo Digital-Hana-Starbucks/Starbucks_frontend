@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ApiClient } from "../apis/apiClient";
-import { MenuType } from "../types/menu";
 import { useQuery } from "react-query";
 import MenuCard from "../components/organisms/MenuCard";
 import Category from "../components/ui/Category";
+import { CategoryType } from "../types/category";
 
 const MenuPage = () => {
   const [categoryIdx, setCategoryIdx] = useState<number>(1);
+  const [categoryList, setCategoryList] = useState<CategoryType[]>([]);
   const navigate = useNavigate();
   const { isLoading, data } = useQuery({
     queryKey: ["menus", categoryIdx],
@@ -16,6 +17,15 @@ const MenuPage = () => {
       return res;
     },
   });
+
+  useEffect(() => {
+    const getCategoryListFunc = async () => {
+      const res = await ApiClient.getInstance().getCategoryList();
+      console.log(res);
+      setCategoryList(res);
+    };
+    getCategoryListFunc();
+  }, []);
 
   const setCategoryIdxFunc = (idx: number) => {
     setCategoryIdx(idx);
@@ -33,17 +43,29 @@ const MenuPage = () => {
       <div className="flex-row grid grid-cols-4 gap-2 bg-starbucksBeige h-[55vh] ">
         {/* 메뉴 버튼 영역 */}
         <div>
-          <Category
-            categoryIdx={2}
-            categoryName={"홍길동"}
-            onClick={() => setCategoryIdxFunc(2)}
-          />
+          <ul className="flex flex-col h-[55vh]">
+            {categoryList?.map((category: CategoryType) => (
+              <li key={category.categoryIdx}>
+                <Category
+                  categoryIdx={category.categoryIdx}
+                  categoryName={category.categoryName}
+                  onClick={() => setCategoryIdxFunc(category.categoryIdx)}
+                />
+              </li>
+            ))}
+          </ul>
         </div>
         {/* 메뉴 선택 영역 */}
         <div className="col-span-3">
           <MenuCard data={data} />
         </div>
       </div>
+      {/* 장바구니 영역 */}
+      <ul className="flex flex-col h-[55vh]">
+        {categoryList?.map((category: CategoryType, index) => (
+          <li key={category.categoryIdx}></li>
+        ))}
+      </ul>
     </section>
   );
 };
