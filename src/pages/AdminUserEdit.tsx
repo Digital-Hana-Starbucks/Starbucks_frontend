@@ -18,7 +18,7 @@ const AdminUserEdit: React.FC = () => {
   };
 
   const handleSave = (updatedUser: UserType) => {
-    navigate(`/AdminUserList`);
+    navigate(`/admin`);
     // TODO: 수정 api연결
   };
 

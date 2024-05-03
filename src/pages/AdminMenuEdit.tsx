@@ -24,7 +24,7 @@ const AdminMenuEdit: React.FC = () => {
     console.log("Updated menu:", updatedMenu.menuId);
     console.log("Updated menu:", updatedMenu.menuPrice);
     console.log("Updated menu:", updatedMenu.menuName);
-    navigate(`/AdminMenuList`);
+    navigate(`/admin`);
     // TODO: 수정 api연결
   };
 

@@ -16,7 +16,7 @@ const AdminUserEdit: React.FC = () => {
   };
 
   const handleSave = (updatedOrderr: OrderType) => {
-    navigate(`/AdminOrderList`);
+    navigate(`/admin`);
     // TODO: 수정 api연결
   };
 
