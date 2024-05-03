@@ -21,6 +21,14 @@ export class ApiClient implements menuApi {
     return response.data;
   }
 
+  async getMenu(menuIdx: number) {
+    const response = await this.axiosInstance.request<MenuType>({
+      method: "get",
+      url: `/products/${menuIdx}`,
+    });
+    return response.data;
+  }
+
   static getInstance(): ApiClient {
     return this.instance || (this.instance = new this());
   }
