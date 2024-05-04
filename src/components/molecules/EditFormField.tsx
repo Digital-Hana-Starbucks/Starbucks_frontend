@@ -4,6 +4,7 @@ interface Props<T> {
   label: string;
   value: T;
   onChange: (value: T) => void;
+  onImageChange?: (img: File | undefined) => void;
   type?: string;
   editable?: boolean;
 }
@@ -12,6 +13,7 @@ const EditFormField: React.FC<Props<any>> = ({
   label,
   value,
   onChange,
+  onImageChange,
   type = "text",
   editable = true,
 }) => {
@@ -26,13 +28,17 @@ const EditFormField: React.FC<Props<any>> = ({
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
+      const img = e.target.files[0];
       const reader = new FileReader();
       reader.onload = (event) => {
         const imageSrc = event.target?.result as string;
         setImageUrl(imageSrc);
         onChange(imageSrc as any);
+        if (onImageChange) {
+          onImageChange(img);
+        }
       };
-      reader.readAsDataURL(e.target.files[0]);
+      reader.readAsDataURL(img);
     }
   };
 

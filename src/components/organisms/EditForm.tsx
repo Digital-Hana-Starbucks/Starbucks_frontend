@@ -1,22 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import EditFormField from "../molecules/EditFormField";
 import TableButton from "../molecules/TableButton";
 
+interface LabelInfo {
+  key: string;
+  label: string;
+  editable: boolean;
+}
+
 interface Props {
   data: any;
-  onSave: (updatedData: any) => void;
-  labels: { key: string; label: string; editable: boolean }[];
+  onSave: (updatedData: any, img: File | undefined) => void;
+  labels: LabelInfo[];
 }
 
 const EditForm: React.FC<Props> = ({ data, onSave, labels }) => {
-  const [formData, setFormData] = useState(data);
+  const [formData, setFormData] = useState<any>(data || {});
+  const [newMenuImg, setNewMenuImg] = useState<File | undefined>(undefined);
+
+  useEffect(() => {
+    if (data) {
+      setFormData(data);
+    }
+  }, [data]);
 
   const handleChange = (field: string, value: any) => {
     setFormData((prevData: any) => ({ ...prevData, [field]: value }));
   };
 
+  const handleImageChange = (img: File | undefined) => {
+    setNewMenuImg(img);
+  };
+
   const handleSave = () => {
-    onSave(formData);
+    onSave(formData, newMenuImg);
   };
 
   return (
@@ -26,9 +43,12 @@ const EditForm: React.FC<Props> = ({ data, onSave, labels }) => {
           <EditFormField
             key={index}
             label={labelInfo.label}
-            value={formData[labelInfo.key]}
+            value={formData[labelInfo.key] || ""}
             editable={labelInfo.editable}
             onChange={(value: any) => handleChange(labelInfo.key, value)}
+            onImageChange={
+              labelInfo.key === "menuImage" ? handleImageChange : undefined
+            }
           />
         ))}
       </div>

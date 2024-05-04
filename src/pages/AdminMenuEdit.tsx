@@ -1,8 +1,8 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import MenuType from "../types/menu";
+import { MenuType, UpdatedMenuType } from "../types/menu";
 import EditForm from "../components/organisms/EditForm";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { ApiClient } from "../apis/apiClient";
 
 const AdminMenuEdit: React.FC = () => {
@@ -18,8 +18,34 @@ const AdminMenuEdit: React.FC = () => {
     },
   });
 
-  const handleSave = (updatedMenu: MenuType) => {
-    navigate(`/admin`);
+  const updateMenuMutation = useMutation(
+    (formData: FormData) =>
+      ApiClient.getInstance().updateMenu(Number(index), formData),
+    {
+      onSuccess: () => {
+        alert("수정 완료");
+        navigate(`/admin`);
+      },
+    },
+  );
+
+  const handleSave = (updatedMenu: MenuType, newMenuImg: File | undefined) => {
+    const formData = new FormData();
+
+    const newData: UpdatedMenuType = {
+      menuName: updatedMenu.menuName,
+      menuPrice: updatedMenu.menuPrice,
+      categoryIdx: updatedMenu.categoryIdx,
+    };
+
+    const json = JSON.stringify(newData);
+    const blob = new Blob([json], { type: "application/json" });
+    formData.append("dto", blob);
+    if (newMenuImg) {
+      formData.append("menuImg", newMenuImg);
+    }
+
+    updateMenuMutation.mutate(formData);
   };
 
   const labels = [

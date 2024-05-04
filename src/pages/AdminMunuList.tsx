@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import MenuType from "../types/menu";
+import { MenuType } from "../types/menu";
 import { ApiClient } from "../apis/apiClient";
 import ListTable from "../components/organisms/ListTable";
 import { useMutation, useQuery } from "react-query";

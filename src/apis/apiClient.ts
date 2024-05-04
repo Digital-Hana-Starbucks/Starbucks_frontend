@@ -2,7 +2,7 @@ import axios, { AxiosInstance } from "axios";
 import { menuApi } from "./interfaces/menuApi";
 import { API_BASE_URL } from "./url";
 import { getCookie } from "../utils/cookie";
-import MenuType from "../types/menu";
+import { MenuType } from "../types/menu";
 
 export class ApiClient implements menuApi {
   private static instance: ApiClient;
@@ -34,6 +34,23 @@ export class ApiClient implements menuApi {
       method: "delete",
       url: `/products/admin/${menuIdx}`,
     });
+    return response.data;
+  }
+  async updateMenu(index: number, newMenu: FormData) {
+    const axiosInstance = axios.create({
+      baseURL: API_BASE_URL,
+      timeout: 100000,
+    });
+
+    const response = await axiosInstance.request<void>({
+      method: "put",
+      url: `/products/admin/${index}`,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      data: newMenu,
+    });
+
     return response.data;
   }
 
