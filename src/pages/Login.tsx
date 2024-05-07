@@ -35,8 +35,12 @@ const Login = () => {
         userPw: password,
       });
       console.log("로그인 성공!");
-      setCookie("token", response);
-      navigate("/choosePlace");
+      setCookie("token", response.token);
+      if (response.user.userRole === "USER") {
+        navigate("/choosePlace");
+      } else {
+        navigate("/admin");
+      }
     } catch (error) {
       setErrorMessage("잘못되거나 없는 회원 정보입니다.");
       console.error("로그인 실패:", error);
