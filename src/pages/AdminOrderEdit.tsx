@@ -2,22 +2,12 @@ import React from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import EditForm from "../components/organisms/EditForm";
 import OrderType from "../types/order";
-import { useQuery } from "react-query";
-import { ApiClient } from "../apis/apiClient";
 
 const AdminUserEdit: React.FC = () => {
   const navigate = useNavigate();
-
   const location = useLocation();
-  const index = location.pathname.split("/").pop();
 
-  const { isLoading, data } = useQuery({
-    queryKey: ["menu", Number(index)],
-    queryFn: () => {
-      const res = ApiClient.getInstance().getOrder(Number(index));
-      return res;
-    },
-  });
+  const data: OrderType = { ...location.state };
 
   const handleSave = (updatedOrderr: OrderType) => {
     navigate(`/admin`);
@@ -25,6 +15,7 @@ const AdminUserEdit: React.FC = () => {
   };
 
   const labels = [
+    { key: "userNickname", label: "주문자", editable: false },
     { key: "orderId", label: "주문코드", editable: false },
     { key: "totalPrice", label: "주문총금액", editable: false },
     { key: "orderStatus", label: "주문상태", editable: true },

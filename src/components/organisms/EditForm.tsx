@@ -43,7 +43,7 @@ const EditForm: React.FC<Props> = ({ data, onSave, labels }) => {
           <EditFormField
             key={index}
             label={labelInfo.label}
-            value={formData[labelInfo.key] || ""}
+            value={formData[labelInfo.key]}
             editable={labelInfo.editable}
             onChange={(value: any) => handleChange(labelInfo.key, value)}
             onImageChange={

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { formatter } from "../../utils/dateTimeformat";
 
 interface Props<T> {
   label: string;
@@ -56,6 +57,8 @@ const EditFormField: React.FC<Props<any>> = ({
     }
   };
 
+  const formattedValue = label.includes("Date") ? formatter(value) : value;
+
   return (
     <div className="flex items-center border">
       <label
@@ -70,7 +73,7 @@ const EditFormField: React.FC<Props<any>> = ({
             className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
               editable ? "" : "bg-gray-200"
             }`}
-            value={value as string}
+            value={formattedValue as string}
             onChange={handleChange}
             readOnly={!editable}
           />
@@ -94,7 +97,7 @@ const EditFormField: React.FC<Props<any>> = ({
                 className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
                   editable ? "" : "bg-gray-200"
                 }`}
-                value={value as string}
+                value={formattedValue as string}
                 readOnly={!editable}
                 onChange={handleChange}
               />

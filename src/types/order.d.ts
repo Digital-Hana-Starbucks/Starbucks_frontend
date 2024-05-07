@@ -1,5 +1,6 @@
 type OrderType = {
-  userIdx: number;
+  userIdx: number | null;
+  userNickname: string | null;
   orderIdx: number;
   orderId: string;
   totalPrice: number;
