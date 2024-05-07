@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ListTable from "../components/organisms/ListTable";
 import { useMutation, useQuery } from "react-query";
@@ -21,14 +21,16 @@ const AdminOrderList: React.FC = () => {
 
   const { isLoading, data, refetch } = useQuery<OrderType[]>({
     queryKey: ["orders"],
-    queryFn: () => {
-      return ApiClient.getInstance().getOrderList();
-    },
+    queryFn: () => ApiClient.getInstance().getOrderList(),
     onSuccess: (data) => {
       const indexes = findNullIndexes(data);
       setNullIndexes(indexes);
     },
   });
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   const findNullIndexes = (orders: OrderType[]) => {
     return orders.reduce((nullIndexes: number[], order, index) => {
@@ -44,12 +46,13 @@ const AdminOrderList: React.FC = () => {
     {
       onSuccess: () => {
         alert("삭제 완료");
+        refetch();
       },
     },
   );
 
   const handleDelete = (index: number) => {
-    const orderIdx = data![index].orderIdx;
+    const orderIdx = data![index]?.orderIdx;
     if (orderIdx !== undefined) {
       deleteOrderMutation.mutate(orderIdx);
     } else {
@@ -84,8 +87,8 @@ const AdminOrderList: React.FC = () => {
       ) : (
         <div className="mx-auto p-4 max-w-screen-lg flex flex-col items-start">
           <h2 className="m-2 text-sm">
-            총 <p className="text-red-500 inline-block">{data.length}</p>건의
-            주문이 있습니다.
+            총 <span className="text-red-500 inline-block">{data.length}</span>
+            건의 주문이 있습니다.
           </h2>
           <ListTable
             tableData={data.map((order, index) => [

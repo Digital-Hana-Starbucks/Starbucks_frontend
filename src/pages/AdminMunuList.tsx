@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import { MenuType } from "../types/menu";
 import { ApiClient } from "../apis/apiClient";
 import ListTable from "../components/organisms/ListTable";
@@ -26,12 +26,9 @@ const getCategory = (categoryIdx: number) => {
 
 const AdminMenuList: React.FC = () => {
   const navigate = useNavigate();
-
   const { isLoading, data, refetch } = useQuery<MenuType[]>({
     queryKey: ["menus"],
-    queryFn: () => {
-      return ApiClient.getInstance().getMenuList();
-    },
+    queryFn: () => ApiClient.getInstance().getMenuList(),
   });
 
   const deleteMenuMutation = useMutation(
@@ -39,25 +36,26 @@ const AdminMenuList: React.FC = () => {
     {
       onSuccess: () => {
         alert("삭제 완료");
+        refetch();
       },
     },
   );
 
   const handleDelete = (index: number) => {
-    const menuIdx = data![index].menuIdx;
+    const menuIdx = data![index]?.menuIdx;
     if (menuIdx !== undefined) {
       deleteMenuMutation.mutate(menuIdx);
     } else {
-      console.error(`User index not found for index ${index}`);
+      console.error(`Menu index not found for index ${index}`);
     }
   };
 
   const handleEdit = (index: number) => {
-    const menuIdx = data![index].menuIdx;
+    const menuIdx = data![index]?.menuIdx;
     if (menuIdx !== undefined) {
       navigate(`/adminMenuEdit/${menuIdx}`);
     } else {
-      console.error(`User index not found for index ${index}`);
+      console.error(`Menu index not found for index ${index}`);
     }
   };
 
@@ -70,12 +68,12 @@ const AdminMenuList: React.FC = () => {
       ) : (
         <div className="mx-auto p-4 max-w-screen-lg flex flex-col items-start">
           <h2 className="m-2 text-sm">
-            총 <p className="text-red-500 inline-block">{data?.length}</p>개의
-            메뉴가 있습니다.
+            총 <span className="text-red-500 inline-block">{data?.length}</span>
+            개의 메뉴가 있습니다.
           </h2>
           <ListTable
-            tableData={data!.map((menu) => [
-              menu.menuIdx,
+            tableData={data!.map((menu, index) => [
+              index + 1,
               menu.menuName,
               menu.menuPrice,
               menu.menuImage,
