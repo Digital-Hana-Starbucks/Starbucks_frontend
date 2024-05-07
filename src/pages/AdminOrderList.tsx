@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ListTable from "../components/organisms/ListTable";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { ApiClient } from "../apis/apiClient";
 import { OrderType } from "../types/order";
 import { formatter } from "../utils/dateTimeformat";
@@ -39,8 +39,22 @@ const AdminOrderList: React.FC = () => {
     }, []);
   };
 
+  const deleteOrderMutation = useMutation(
+    (index: number) => ApiClient.getInstance().deleteOrder(index),
+    {
+      onSuccess: () => {
+        alert("삭제 완료");
+      },
+    },
+  );
+
   const handleDelete = (index: number) => {
-    console.log(`Delete item at index ${index}`);
+    const orderIdx = data![index].orderIdx;
+    if (orderIdx !== undefined) {
+      deleteOrderMutation.mutate(orderIdx);
+    } else {
+      console.error(`Order index not found for index ${index}`);
+    }
   };
 
   const handleEdit = (index: number) => {
@@ -51,7 +65,7 @@ const AdminOrderList: React.FC = () => {
         state: { ...order, userNickname },
       });
     } else {
-      console.error(`User index not found for index ${index}`);
+      console.error(`Order index not found for index ${index}`);
     }
   };
 

@@ -74,6 +74,14 @@ export class ApiClient implements menuApi, orderApi {
     return response.data;
   }
 
+  async deleteOrder(orderIdx: number) {
+    const response = await this.axiosInstance.request<void>({
+      method: "delete",
+      url: `/orders/admin/${orderIdx}`,
+    });
+    return response.data;
+  }
+
   static getInstance(): ApiClient {
     return this.instance || (this.instance = new this());
   }
