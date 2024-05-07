@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { formatter } from "../../utils/dateTimeformat";
 
 interface Props<T> {
   label: string;
@@ -57,8 +56,6 @@ const EditFormField: React.FC<Props<any>> = ({
     }
   };
 
-  const formattedValue = label.includes("Date") ? formatter(value) : value;
-
   return (
     <div className="flex items-center border">
       <label
@@ -67,18 +64,20 @@ const EditFormField: React.FC<Props<any>> = ({
       >
         {label}
       </label>
-      <div className="border-l pl-2 p-2">
+      <div className="border-l pl-2 p-2 flex-grow">
+        {" "}
+        {/* modified */}
         {type === "textarea" ? (
           <textarea
             className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
               editable ? "" : "bg-gray-200"
             }`}
-            value={formattedValue as string}
+            value={value}
             onChange={handleChange}
             readOnly={!editable}
           />
         ) : (
-          <div className="flex items-center">
+          <div className="flex items-center w-full">
             {imageUrl ? (
               <>
                 <img src={imageUrl} alt="image" className="h-16 w-16 mr-2" />
@@ -97,7 +96,7 @@ const EditFormField: React.FC<Props<any>> = ({
                 className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
                   editable ? "" : "bg-gray-200"
                 }`}
-                value={formattedValue as string}
+                value={value}
                 readOnly={!editable}
                 onChange={handleChange}
               />

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import EditFormField from "../molecules/EditFormField";
 import TableButton from "../molecules/TableButton";
+import { formatter } from "../../utils/dateTimeformat";
 
 interface LabelInfo {
   key: string;
@@ -36,6 +37,13 @@ const EditForm: React.FC<Props> = ({ data, onSave, labels }) => {
     onSave(formData, newMenuImg);
   };
 
+  const applyFormatter = (value: any, key: string) => {
+    if (key.endsWith("Date")) {
+      return formatter(new Date(value));
+    }
+    return value;
+  };
+
   return (
     <div>
       <div className="p-2 m-2">
@@ -43,7 +51,7 @@ const EditForm: React.FC<Props> = ({ data, onSave, labels }) => {
           <EditFormField
             key={index}
             label={labelInfo.label}
-            value={formData[labelInfo.key]}
+            value={applyFormatter(formData[labelInfo.key], labelInfo.key)}
             editable={labelInfo.editable}
             onChange={(value: any) => handleChange(labelInfo.key, value)}
             onImageChange={
