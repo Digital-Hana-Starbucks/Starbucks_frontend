@@ -1,47 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ListTable from "../components/organisms/ListTable";
+import { useQuery } from "react-query";
+import UserType from "../types/user";
+import { ApiClient } from "../apis/apiClient";
 
 const columnsForUser = ["번호", "아이디", "암호", "이름", "권한", "가입일"];
 
 const AdminUserList: React.FC = () => {
   const navigate = useNavigate();
 
-  const users = [
-    {
-      user_idx: 1,
-      user_id: "hong1",
-      user_pw: "dfkajd216dfafa3faef",
-      user_nickname: "닉네임",
-      user_role: "USER",
-      user_point: 0,
-      user_join_date: "2023-08-30",
+  const { isLoading, data, refetch } = useQuery<UserType[]>({
+    queryKey: ["users"],
+    queryFn: () => {
+      return ApiClient.getInstance().getUserList();
     },
-    {
-      user_idx: 2,
-      user_id: "hong2",
-      user_pw: "dfkajd216dfafa3faef",
-      user_nickname: "닉네임",
-      user_role: "USER",
-      user_point: 0,
-      user_join_date: "2023-08-30",
-    },
-    {
-      user_idx: 3,
-      user_id: "hong3",
-      user_pw: "dfkajd216dfafa3faef",
-      user_nickname: "닉네임",
-      user_role: "USER",
-      user_point: 0,
-      user_join_date: "2023-08-30",
-    },
-  ];
+  });
+
   const handleDelete = (index: number) => {
     console.log(`Delete item at index ${index}`);
   };
 
   const handleEdit = (index: number) => {
-    const userIndex = users[index]?.user_idx;
+    const userIndex = data![index]?.userIdx;
     if (userIndex !== undefined) {
       navigate(`/adminUserEdit/${userIndex}`);
       console.log(`Edit item at index ${userIndex}`);
@@ -52,22 +33,24 @@ const AdminUserList: React.FC = () => {
 
   return (
     <div>
-      {users.length === 0 || users == null ? (
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : data == null || data.length === 0 ? (
         <p>회원목록이 없습니다</p>
       ) : (
         <div className="mx-auto p-4 max-w-screen-lg flex flex-col items-start">
           <h2 className="m-2 text-sm">
-            총 <p className="text-red-500 inline-block">{users.length}</p>명의
+            총 <p className="text-red-500 inline-block">{data.length}</p>명의
             회원이 있습니다.
           </h2>
           <ListTable
-            tableData={users.map((users, index) => [
+            tableData={data.map((users, index) => [
               index + 1,
-              users.user_id,
-              users.user_pw.replace(/./g, "*"), // 비밀번호를 길이만큼 *로 대체합니다.
-              users.user_nickname,
-              users.user_role,
-              users.user_join_date,
+              users.userId,
+              users.userPw.replace(/./g, "*").slice(0, 10), // 비밀번호를 길이만큼 *로 대체합니다.(최대 10자 출력)
+              users.userNickname,
+              users.userRole,
+              users.userJoinDate,
             ])}
             columns={columnsForUser}
             onDelete={handleDelete}

@@ -5,8 +5,10 @@ import { getCookie } from "../utils/cookie";
 import { MenuType } from "../types/menu";
 import { OrderType, updateOrderType } from "../types/order";
 import { orderApi } from "./interfaces/orderApi";
+import { userApi } from "./interfaces/userApi";
+import UserType from "../types/user";
 
-export class ApiClient implements menuApi, orderApi {
+export class ApiClient implements menuApi, orderApi, userApi {
   private static instance: ApiClient;
   private axiosInstance: AxiosInstance;
 
@@ -78,6 +80,23 @@ export class ApiClient implements menuApi, orderApi {
     const response = await this.axiosInstance.request<void>({
       method: "delete",
       url: `/orders/admin/${orderIdx}`,
+    });
+    return response.data;
+  }
+
+  //-----------user
+  async getUserList() {
+    const response = await this.axiosInstance.request<UserType[]>({
+      method: "get",
+      url: `/users`,
+    });
+    return response.data;
+  }
+
+  async getUser(userIdx: number) {
+    const response = await this.axiosInstance.request<UserType>({
+      method: "get",
+      url: `/users/${userIdx}`,
     });
     return response.data;
   }
