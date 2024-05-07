@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ListTable from "../components/organisms/ListTable";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import UserType from "../types/user";
 import { ApiClient } from "../apis/apiClient";
 
@@ -17,8 +17,22 @@ const AdminUserList: React.FC = () => {
     },
   });
 
+  const deleteUserMutation = useMutation(
+    (index: number) => ApiClient.getInstance().deleteUser(index),
+    {
+      onSuccess: () => {
+        alert(`삭제 완료`);
+      },
+    },
+  );
+
   const handleDelete = (index: number) => {
-    console.log(`Delete item at index ${index}`);
+    const userIndex = data![index]?.userIdx;
+    if (userIndex !== undefined) {
+      deleteUserMutation.mutate(userIndex);
+    } else {
+      console.error(`User index not found for index ${index}`);
+    }
   };
 
   const handleEdit = (index: number) => {
