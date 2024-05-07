@@ -10,10 +10,16 @@ type MenuType = {
 type BasketMenuType = {
   basketIdx: number;
   menuIdx: number;
+  menuName: string;
   menuPrice: number;
+  menuImage: string;
   orderDetailCount: number;
   menuTemperature?: string | null;
   menuSize?: string | null;
 };
+type BasketType = {
+  totalPrice: number;
+  basketList: BasketMenuType[];
+};
 
-export { MenuType, BasketMenuType };
+export { MenuType, BasketMenuType, BasketType };

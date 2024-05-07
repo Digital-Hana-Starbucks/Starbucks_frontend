@@ -5,10 +5,10 @@ import {
   useContext,
   useReducer,
 } from "react";
-import { BasketMenuType } from "../types/menu";
+import { BasketMenuType, BasketType } from "../types/menu";
 
 type BasketContextProp = {
-  basket: BasketMenuType[];
+  basket: BasketType;
   // 장바구니에 담는 함수
   addBasket: (menu: BasketMenuType) => void;
   // 장바구니에서 삭제하는 함수
@@ -31,59 +31,66 @@ type Action =
     }
   | { type: "removeBasket" | "plusMenu" | "minusMenu"; payload: number };
 
-const DefaultBasket: BasketMenuType[] = [];
+const DefaultBasket: BasketType = {
+  totalPrice: 0,
+  basketList: [] as BasketMenuType[],
+};
 
 const BasketContext = createContext<BasketContextProp>({
-  basket: [] as BasketMenuType[],
+  basket: { totalPrice: 0, basketList: [] as BasketMenuType[] },
   addBasket: (menu: BasketMenuType) => {},
   removeBasket: (basketIdx: number) => {},
   plusMenu: (basketIdx: number) => {},
   minusMenu: (basketIdx: number) => {},
 });
 
-const reducer = (
-  basketList: BasketMenuType[],
-  { type, payload }: Action,
-): BasketMenuType[] => {
+const reducer = (basket: BasketType, { type, payload }: Action): BasketType => {
   let newer: BasketMenuType[] = [];
+  let newer2: number = basket.totalPrice;
 
   switch (type) {
     case "addBasket":
-      newer = [...basketList, payload];
+      newer = [...basket.basketList, payload];
+      newer2 += payload.menuPrice;
       break;
 
     case "removeBasket":
-      for (let i = 0; i < basketList.length; i++) {
-        let menu = basketList[i];
+      for (let i = 0; i < basket.basketList.length; i++) {
+        let menu = basket.basketList[i];
         if (menu.basketIdx == payload) {
-          i == basketList.length - 1
-            ? (newer = basketList.slice(0, i))
+          i == basket.basketList.length - 1
+            ? (newer = basket.basketList.slice(0, i))
             : (newer = [
-                ...basketList.slice(0, i),
-                ...basketList.slice(i + 1, basketList.length),
+                ...basket.basketList.slice(0, i),
+                ...basket.basketList.slice(i + 1, basket.basketList.length),
               ]);
+          newer2 -= menu.menuPrice * menu.orderDetailCount;
           break;
         }
       }
       break;
 
     case "plusMenu":
-      for (let i = 0; i < basketList.length; i++) {
-        let menu = basketList[i];
+      for (let i = 0; i < basket.basketList.length; i++) {
+        let menu = basket.basketList[i];
         if (menu.basketIdx == payload) {
-          newer = [...basketList];
+          newer = [...basket.basketList];
+          console.log(newer[i].orderDetailCount);
           newer[i].orderDetailCount++;
+          console.log("after : " + newer[i].orderDetailCount);
+          newer2 += menu.menuPrice;
           break;
         }
       }
       break;
 
     case "minusMenu":
-      for (let i = 0; i < basketList.length; i++) {
-        let menu = basketList[i];
+      for (let i = 0; i < basket.basketList.length; i++) {
+        let menu = basket.basketList[i];
         if (menu.basketIdx == payload) {
-          newer = [...basketList];
+          newer = [...basket.basketList];
           newer[i].orderDetailCount--;
+          newer2 -= menu.menuPrice;
           break;
         }
       }
@@ -93,7 +100,12 @@ const reducer = (
       break;
   }
 
-  return newer;
+  let res: BasketType = {
+    totalPrice: newer2,
+    basketList: newer,
+  };
+
+  return res;
 };
 
 export const BasketProvider = ({ children }: ProviderProps) => {
