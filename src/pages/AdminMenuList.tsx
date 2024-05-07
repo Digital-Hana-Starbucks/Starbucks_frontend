@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { MenuType } from "../types/menu";
-import { ApiClient } from "../apis/apiClient";
 import ListTable from "../components/organisms/ListTable";
 import { useMutation, useQuery } from "react-query";
+import { ApiClient } from "../apis/apiClient";
+import { MenuType } from "../types/menu";
 
 const columnsForMenu = ["번호", "이름", "가격", "이미지", "카테고리"];
+const PAGE_SIZE = 10;
 
 const getCategory = (categoryIdx: number) => {
   switch (categoryIdx) {
@@ -31,6 +32,7 @@ const AdminMenuList: React.FC = () => {
     queryFn: () => ApiClient.getInstance().getMenuList(),
   });
 
+  const [currentPage, setCurrentPage] = useState(1);
   const deleteMenuMutation = useMutation(
     (index: number) => ApiClient.getInstance().deleteMenu(index),
     {
@@ -59,6 +61,11 @@ const AdminMenuList: React.FC = () => {
     }
   };
 
+  const totalPages = data ? Math.ceil(data.length / PAGE_SIZE) : 0;
+  const startIndex = (currentPage - 1) * PAGE_SIZE;
+  const endIndex = startIndex + PAGE_SIZE;
+  const slicedData = data?.slice(startIndex, endIndex);
+
   return (
     <div>
       {isLoading ? (
@@ -72,8 +79,8 @@ const AdminMenuList: React.FC = () => {
             개의 메뉴가 있습니다.
           </h2>
           <ListTable
-            tableData={data!.map((menu, index) => [
-              index + 1,
+            tableData={slicedData!.map((menu, index) => [
+              startIndex + index + 1,
               menu.menuName,
               menu.menuPrice,
               menu.menuImage,
@@ -83,6 +90,21 @@ const AdminMenuList: React.FC = () => {
             onDelete={handleDelete}
             onEdit={handleEdit}
           />
+          <div className="w-full">
+            {Array.from({ length: totalPages }, (_, index) => (
+              <button
+                key={index}
+                className={`m-2 text-sm  hover:text-starbucksGreen ${
+                  currentPage === index + 1
+                    ? "text-starbucksGreen"
+                    : "text-gray-400"
+                }`}
+                onClick={() => setCurrentPage(index + 1)}
+              >
+                {index + 1}
+              </button>
+            ))}
+          </div>
         </div>
       )}
     </div>

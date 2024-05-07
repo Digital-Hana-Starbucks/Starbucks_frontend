@@ -14,10 +14,12 @@ const columnsForOrder = [
   "상태",
   "주문일시",
 ];
+const PAGE_SIZE = 10;
 
 const AdminOrderList: React.FC = () => {
   const navigate = useNavigate();
   const [nullIndexes, setNullIndexes] = useState<number[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const { isLoading, data, refetch } = useQuery<OrderType[]>({
     queryKey: ["orders"],
@@ -78,6 +80,11 @@ const AdminOrderList: React.FC = () => {
       : userNickname;
   };
 
+  const totalPages = data ? Math.ceil(data.length / PAGE_SIZE) : 0;
+  const startIndex = (currentPage - 1) * PAGE_SIZE;
+  const endIndex = startIndex + PAGE_SIZE;
+  const slicedData = data?.slice(startIndex, endIndex);
+
   return (
     <div>
       {isLoading ? (
@@ -91,7 +98,7 @@ const AdminOrderList: React.FC = () => {
             건의 주문이 있습니다.
           </h2>
           <ListTable
-            tableData={data.map((order, index) => [
+            tableData={slicedData!.map((order, index) => [
               index + 1,
               findUserNickname(order.userNickname, index),
               order.orderId,
@@ -103,6 +110,21 @@ const AdminOrderList: React.FC = () => {
             onDelete={handleDelete}
             onEdit={handleEdit}
           />
+          <div className="w-full flex justify-center mt-4">
+            {Array.from({ length: totalPages }, (_, index) => (
+              <button
+                key={index}
+                className={`m-2 text-sm  hover:text-starbucksGreen ${
+                  currentPage === index + 1
+                    ? "text-starbucksGreen"
+                    : "text-gray-400"
+                }`}
+                onClick={() => setCurrentPage(index + 1)}
+              >
+                {index + 1}
+              </button>
+            ))}
+          </div>
         </div>
       )}
     </div>

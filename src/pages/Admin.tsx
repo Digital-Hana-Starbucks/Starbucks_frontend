@@ -12,7 +12,7 @@ const Admin: React.FC = () => {
   };
 
   return (
-    <div className="p-4 h-screen overflow-auto bg-starbucksBeige">
+    <div className="p-4 min-h-screen h-full  bg-starbucksBeige">
       <h1 className="text-2xl font-bold text-gray-900 mb-5">관리자 페이지</h1>
       <div className="grid grid-cols-5 ">
         <div></div>
