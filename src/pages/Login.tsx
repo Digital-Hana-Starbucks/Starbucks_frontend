@@ -4,11 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { ApiClient } from "../apis/apiClient";
 import { LoginType } from "../types/user";
 import AlertModal from "../components/molecule/AlertModal";
+import { setCookie } from "../utils/cookie";
 
 const Login = () => {
   const navigate = useNavigate();
 
   const [openModal, setOpenModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const idRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -23,15 +25,22 @@ const Login = () => {
 
     if (!id || !password) {
       setOpenModal(true);
+      setErrorMessage("아이디 및 비밀번호를 입력해주세요.");
       return;
     }
 
     try {
-      await loginMutation.mutateAsync({ userId: id, userPw: password });
+      const response = await loginMutation.mutateAsync({
+        userId: id,
+        userPw: password,
+      });
       console.log("로그인 성공!");
+      console.log(response);
+      setCookie("token", response);
       navigate("/choosePlace");
     } catch (error) {
-      console.error("로그인 실패:", error);
+      setOpenModal(true);
+      setErrorMessage("잘못된 회원 정보입니다.");
     }
   };
 
@@ -39,7 +48,7 @@ const Login = () => {
     <section className="relative flex flex-col justify-center items-center h-[100vh] gap-9 bg-starbucksBeige">
       {openModal && (
         <AlertModal
-          message="아이디 및 비밀번호를 입력해주세요."
+          message={errorMessage}
           modalToggle={() => setOpenModal(!openModal)}
         />
       )}
