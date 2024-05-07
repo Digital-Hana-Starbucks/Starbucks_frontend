@@ -6,15 +6,11 @@ import { useMutation, useQuery } from "react-query";
 import { ApiClient } from "../apis/apiClient";
 
 const AdminUserEdit: React.FC = () => {
-  const navigate = useNavigate();
+  const index = location.pathname.split("/").pop();
 
-  const index = useLocation().pathname.split("/").pop();
-
-  const { isLoading, data, refetch } = useQuery<UserType>({
+  const { isLoading, data } = useQuery<UserType>({
     queryKey: ["user", Number(index)],
-    queryFn: () => {
-      return ApiClient.getInstance().getUser(Number(index));
-    },
+    queryFn: () => ApiClient.getInstance().getUser(Number(index)),
   });
 
   const updateUserMutation = useMutation(

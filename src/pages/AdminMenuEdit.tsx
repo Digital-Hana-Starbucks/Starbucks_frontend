@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { MenuType, UpdatedMenuType } from "../types/menu";
 import EditForm from "../components/organisms/EditForm";
+import { MenuType, UpdatedMenuType } from "../types/menu";
 import { useMutation, useQuery } from "react-query";
 import { ApiClient } from "../apis/apiClient";
 
@@ -10,12 +10,9 @@ const AdminMenuEdit: React.FC = () => {
   const location = useLocation();
   const index = location.pathname.split("/").pop();
 
-  const { isLoading, data } = useQuery({
+  const { isLoading, data } = useQuery<MenuType>({
     queryKey: ["menu", Number(index)],
-    queryFn: () => {
-      const res = ApiClient.getInstance().getMenu(Number(index));
-      return res;
-    },
+    queryFn: () => ApiClient.getInstance().getMenu(Number(index)),
   });
 
   const updateMenuMutation = useMutation(
@@ -30,22 +27,27 @@ const AdminMenuEdit: React.FC = () => {
   );
 
   const handleSave = (updatedMenu: MenuType, newMenuImg: File | undefined) => {
-    const formData = new FormData();
+    const formData = buildFormData(updatedMenu, newMenuImg);
+    updateMenuMutation.mutate(formData);
+  };
 
+  const buildFormData = (
+    updatedMenu: MenuType,
+    newMenuImg: File | undefined
+  ) => {
+    const formData = new FormData();
     const newData: UpdatedMenuType = {
       menuName: updatedMenu.menuName,
       menuPrice: updatedMenu.menuPrice,
       categoryIdx: updatedMenu.categoryIdx,
     };
-
     const json = JSON.stringify(newData);
     const blob = new Blob([json], { type: "application/json" });
     formData.append("dto", blob);
     if (newMenuImg) {
       formData.append("menuImg", newMenuImg);
     }
-
-    updateMenuMutation.mutate(formData);
+    return formData;
   };
 
   const labels = [

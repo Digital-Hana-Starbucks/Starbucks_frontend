@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import AdminNav from "../components/organisms/AdminNav";
-import AdminMenuList from "./AdminMunuList";
+import AdminMenuList from "./AdminMenuList"; // Fixed typo in import
 import AdminUserList from "./AdminUserList";
 import AdminOrderList from "./AdminOrderList";
 
 const Admin: React.FC = () => {
-  const [selectedPage, setSelectedPage] = useState("menu");
+  const [selectedPage, setSelectedPage] = useState<string>("menu"); // Added type annotation for selectedPage state
+
+  const handlePageChange = (page: string) => {
+    setSelectedPage(page);
+  };
 
   return (
     <div className="p-4 h-screen overflow-auto bg-starbucksBeige">
@@ -16,30 +20,26 @@ const Admin: React.FC = () => {
           id="user"
           label="회원 관리"
           checked={selectedPage === "user"}
-          onChange={() => setSelectedPage("user")}
+          onChange={() => handlePageChange("user")}
         />
         <AdminNav
           id="menu"
           label="메뉴 관리"
           checked={selectedPage === "menu"}
-          onChange={() => setSelectedPage("menu")}
+          onChange={() => handlePageChange("menu")}
         />
         <AdminNav
           id="order"
           label="주문 관리"
           checked={selectedPage === "order"}
-          onChange={() => setSelectedPage("order")}
+          onChange={() => handlePageChange("order")}
         />
         <div></div>
       </div>
       <div>
-        {selectedPage === "menu" ? (
-          <AdminMenuList />
-        ) : selectedPage === "user" ? (
-          <AdminUserList />
-        ) : (
-          <AdminOrderList />
-        )}
+        {selectedPage === "menu" && <AdminMenuList />}{" "}
+        {selectedPage === "user" && <AdminUserList />}{" "}
+        {selectedPage === "order" && <AdminOrderList />}{" "}
       </div>
     </div>
   );

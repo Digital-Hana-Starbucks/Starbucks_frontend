@@ -8,7 +8,7 @@ import CheckUser from "./pages/CheckUser";
 import ChoosePlace from "./pages/ChoosePlace";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import AdminMenuList from "./pages/AdminMunuList";
+import AdminMenuList from "./pages/AdminMenuList";
 import AdminMenuEdit from "./pages/AdminMenuEdit";
 import AdminUserList from "./pages/AdminUserList";
 import AdminUserEdit from "./pages/AdminUserEdit";
