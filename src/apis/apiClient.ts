@@ -3,7 +3,7 @@ import { menuApi } from "./interfaces/menuApi";
 import { API_BASE_URL } from "./url";
 import { getCookie } from "../utils/cookie";
 import MenuType from "../types/menu";
-import { LoginType } from "../types/user";
+import { LoginType, SignupType } from "../types/user";
 import { loginApi } from "./interfaces/userApi";
 
 export class ApiClient implements menuApi, loginApi {
@@ -27,8 +27,17 @@ export class ApiClient implements menuApi, loginApi {
     return this.instance || (this.instance = new this());
   }
 
-  async login(user: LoginType) {
+  async signup(user: SignupType) {
     const response = await this.axiosInstance.request<void>({
+      method: "post",
+      url: "/users/signup",
+      data: user,
+    });
+    return response.data;
+  }
+
+  async login(user: LoginType) {
+    const response = await this.axiosInstance.request({
       method: "post",
       url: "/users/login",
       data: user,
