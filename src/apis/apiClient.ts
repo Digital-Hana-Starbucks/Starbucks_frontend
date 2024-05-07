@@ -67,7 +67,7 @@ export class ApiClient implements menuApi, orderApi {
 
   async updateOrder(orderIdx: number, status: updateOrderType) {
     const response = await this.axiosInstance.request<void>({
-      method: "update",
+      method: "put",
       url: `/orders/admin/${orderIdx}`,
       data: status,
     });
