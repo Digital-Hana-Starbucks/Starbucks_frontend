@@ -101,6 +101,15 @@ export class ApiClient implements menuApi, orderApi, userApi {
     return response.data;
   }
 
+  async updateUser(userIdx: number, status: UserType) {
+    const response = await this.axiosInstance.request<void>({
+      method: "put",
+      url: `/users/admin/${userIdx}`,
+      data: status,
+    });
+    return response.data;
+  }
+
   static getInstance(): ApiClient {
     return this.instance || (this.instance = new this());
   }

@@ -2,7 +2,7 @@ import React from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import EditForm from "../components/organisms/EditForm";
 import UserType from "../types/user";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { ApiClient } from "../apis/apiClient";
 
 const AdminUserEdit: React.FC = () => {
@@ -17,9 +17,19 @@ const AdminUserEdit: React.FC = () => {
     },
   });
 
+  const updateUserMutation = useMutation(
+    (updatedUser: UserType) =>
+      ApiClient.getInstance().updateUser(Number(index), updatedUser),
+    {
+      onSuccess: () => {
+        alert("수정 완료");
+        history.back();
+      },
+    },
+  );
+
   const handleSave = (updatedUser: UserType) => {
-    navigate(`/admin`);
-    // TODO: 수정 api연결
+    updateUserMutation.mutate(updatedUser);
   };
 
   const labels = [
