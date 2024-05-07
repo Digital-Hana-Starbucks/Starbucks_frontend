@@ -13,6 +13,8 @@ type BasketContextProp = {
   addBasket: (menu: BasketMenuType) => void;
   // 장바구니에서 삭제하는 함수
   removeBasket: (basketIdx: number) => void;
+  // 장바구니 비우는 함수
+  resetBasket: () => void;
   // 장바구니에서 개수 +1하는 함수
   plusMenu: (basketIdx: number) => void;
   // 장바구니에서 개수 -1하는 함수
@@ -23,13 +25,13 @@ type ProviderProps = {
   children: ReactNode;
 };
 
-// 앞에 | 지움
 type Action =
   | {
       type: "addBasket";
       payload: BasketMenuType;
     }
-  | { type: "removeBasket" | "plusMenu" | "minusMenu"; payload: number };
+  | { type: "removeBasket" | "plusMenu" | "minusMenu"; payload: number }
+  | { type: "resetBasket"; payload: null };
 
 const DefaultBasket: BasketType = {
   totalPrice: 0,
@@ -40,6 +42,7 @@ const BasketContext = createContext<BasketContextProp>({
   basket: { totalPrice: 0, basketList: [] as BasketMenuType[] },
   addBasket: (menu: BasketMenuType) => {},
   removeBasket: (basketIdx: number) => {},
+  resetBasket: () => {},
   plusMenu: (basketIdx: number) => {},
   minusMenu: (basketIdx: number) => {},
 });
@@ -70,14 +73,17 @@ const reducer = (basket: BasketType, { type, payload }: Action): BasketType => {
       }
       break;
 
+    case "resetBasket":
+      newer = [];
+      newer2 = 0;
+      break;
+
     case "plusMenu":
       for (let i = 0; i < basket.basketList.length; i++) {
         let menu = basket.basketList[i];
         if (menu.basketIdx == payload) {
           newer = [...basket.basketList];
-          console.log(newer[i].orderDetailCount);
           newer[i].orderDetailCount++;
-          console.log("after : " + newer[i].orderDetailCount);
           newer2 += menu.menuPrice;
           break;
         }
@@ -119,6 +125,10 @@ export const BasketProvider = ({ children }: ProviderProps) => {
     dispatch({ type: "removeBasket", payload: basketIdx });
   }, []);
 
+  const resetBasket = useCallback(() => {
+    dispatch({ type: "resetBasket", payload: null });
+  }, []);
+
   const plusMenu = useCallback((basketIdx: number) => {
     dispatch({ type: "plusMenu", payload: basketIdx });
   }, []);
@@ -129,7 +139,14 @@ export const BasketProvider = ({ children }: ProviderProps) => {
 
   return (
     <BasketContext.Provider
-      value={{ basket, addBasket, removeBasket, plusMenu, minusMenu }}
+      value={{
+        basket,
+        addBasket,
+        removeBasket,
+        resetBasket,
+        plusMenu,
+        minusMenu,
+      }}
     >
       {children}
     </BasketContext.Provider>

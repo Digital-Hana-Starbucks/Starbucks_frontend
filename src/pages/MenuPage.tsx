@@ -17,7 +17,7 @@ const MenuPage = () => {
   const [selectedMenu, setSelectedMenu] = useState<BasketMenuType>();
   const [count, setCount] = useState<number>(1);
 
-  const { basket } = useSession();
+  const { basket, resetBasket } = useSession();
 
   const { isLoading, data } = useQuery({
     queryKey: ["menus", categoryIdx],
@@ -107,7 +107,30 @@ const MenuPage = () => {
             총 가격 : {basket.totalPrice.toLocaleString()}원
           </p>
         </div>
-        <BasketCard basketList={basket.basketList} />
+        <div className="flex-row grid grid-cols-4 gap-2">
+          {/* 버튼영역 */}
+          <div className="static flex flex-col justify-around">
+            <div className="flex justify-center">
+              <button
+                className="w-32 h-20 bg-danger rounded-xl"
+                onClick={() => resetBasket()}
+              >
+                <p className="text-white">주문취소</p>
+              </button>
+            </div>
+            <div className="flex justify-center">
+              <button
+                className="w-32 h-20 bg-starbucksGreen rounded-xl"
+                onClick={() => alert("검사")}
+              >
+                <p className="text-white">주문완료</p>
+              </button>
+            </div>
+          </div>
+          <div className="col-span-3">
+            <BasketCard basketList={basket.basketList} />
+          </div>
+        </div>
       </div>
     </section>
   );

@@ -37,7 +37,7 @@ const BasketMenu: FC<IProps> = ({
   };
 
   return (
-    <div className="pl-2 py-2 pr-1 flex flex-col justify-center w-64 h-20 bg-starbucksBeige rounded-lg">
+    <div className="pl-2 py-2 pr-1 flex flex-col justify-center w-[200px] h-20 bg-starbucksBeige rounded-lg">
       <div className="flex justify-end">
         <img
           className="flex w-3 h-3 cursor-pointer bg-black rounded-lg"
@@ -48,7 +48,7 @@ const BasketMenu: FC<IProps> = ({
       <div className="flex w-full">
         <img className="w-14 h-16 rounded-xl" src={menuImage} />
         <div className="pl-2 py-1 flex flex-col justify-between w-full">
-          <p className="flex text-sm line-clamp-1">{menuName}</p>
+          <p className="flex text-left text-sm line-clamp-1">{menuName}</p>
           <div className="flex w-full justify-between">
             <p className="text-sm">
               {(menuPrice * orderDetailCount).toLocaleString()}원
