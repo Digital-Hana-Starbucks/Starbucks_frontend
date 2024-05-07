@@ -8,4 +8,8 @@ type OrderType = {
   orderDate: string;
 };
 
-export default OrderType;
+type updateOrderType = {
+  orderStatus: string;
+};
+
+export { OrderType, updateOrderType };

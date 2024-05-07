@@ -3,9 +3,10 @@ import { menuApi } from "./interfaces/menuApi";
 import { API_BASE_URL } from "./url";
 import { getCookie } from "../utils/cookie";
 import { MenuType } from "../types/menu";
-import OrderType from "../types/order";
+import { OrderType, updateOrderType } from "../types/order";
+import { orderApi } from "./interfaces/orderApi";
 
-export class ApiClient implements menuApi {
+export class ApiClient implements menuApi, orderApi {
   private static instance: ApiClient;
   private axiosInstance: AxiosInstance;
 
@@ -64,10 +65,11 @@ export class ApiClient implements menuApi {
     return response.data;
   }
 
-  async getOrder(orderIdx: number) {
-    const response = await this.axiosInstance.request<OrderType>({
-      method: "get",
-      url: `/orders/${orderIdx}`,
+  async updateOrder(orderIdx: number, status: updateOrderType) {
+    const response = await this.axiosInstance.request<void>({
+      method: "update",
+      url: `/orders/admin/${orderIdx}`,
+      data: status,
     });
     return response.data;
   }

@@ -1,8 +1,7 @@
-import OrderType from "../../types/order";
+import { OrderType } from "../../types/order";
 
-export interface menuApi {
-  getMenuList(): Promise<OrderType[]>;
-  getMenu(index: number): Promise<OrderType>;
-  deleteMenu(index: number): Promise<void>;
-  updateMenu(index: number, newMenu: FormData): Promise<void>;
+export interface orderApi {
+  getOrderList(): Promise<OrderType[]>;
+  //deleteOrder(index: number): Promise<void>;
+  updateOrder(index: number, newMenu: OrderType): Promise<void>;
 }

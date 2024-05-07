@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import ListTable from "../components/organisms/ListTable";
 import { useQuery } from "react-query";
 import { ApiClient } from "../apis/apiClient";
-import OrderType from "../types/order";
+import { OrderType } from "../types/order";
 import { formatter } from "../utils/dateTimeformat";
 
 const columnsForOrder = [

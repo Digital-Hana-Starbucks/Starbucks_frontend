@@ -1,17 +1,33 @@
 import React from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import EditForm from "../components/organisms/EditForm";
-import OrderType from "../types/order";
+import { OrderType, updateOrderType } from "../types/order";
+import { ApiClient } from "../apis/apiClient";
+import { useMutation } from "react-query";
 
 const AdminUserEdit: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
   const data: OrderType = { ...location.state };
+  const index = location.pathname.split("/").pop();
 
-  const handleSave = (updatedOrderr: OrderType) => {
-    navigate(`/admin`);
-    // TODO: 수정 api연결
+  const updateOrderMutation = useMutation(
+    (updatedOrder: updateOrderType) =>
+      ApiClient.getInstance().updateOrder(Number(index), updatedOrder),
+    {
+      onSuccess: () => {
+        alert("수정 완료");
+        history.back();
+      },
+    },
+  );
+
+  const handleSave = (order: OrderType) => {
+    const updatedOrder: updateOrderType = {
+      orderStatus: order.orderStatus,
+    };
+    updateOrderMutation.mutate(updatedOrder);
   };
 
   const labels = [
