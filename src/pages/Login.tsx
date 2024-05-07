@@ -35,12 +35,11 @@ const Login = () => {
         userPw: password,
       });
       console.log("로그인 성공!");
-      console.log(response);
       setCookie("token", response);
       navigate("/choosePlace");
     } catch (error) {
-      setOpenModal(true);
-      setErrorMessage("잘못된 회원 정보입니다.");
+      setErrorMessage("잘못되거나 없는 회원 정보입니다.");
+      console.error("로그인 실패:", error);
     }
   };
 
