@@ -5,7 +5,7 @@ import { getCookie } from "../utils/cookie";
 import { MenuType } from "../types/menu";
 import { OrderType, updateOrderType } from "../types/order";
 import { orderApi } from "./interfaces/orderApi";
-import UserType from "../types/user";
+import { UserType, LoginType, SignupType } from "../types/user";
 import { userApi } from "./interfaces/userApi";
 
 export class ApiClient implements menuApi, orderApi, userApi {
