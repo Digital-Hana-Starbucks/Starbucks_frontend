@@ -1,34 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ListTable from "../components/organisms/ListTable";
+import { useQuery } from "react-query";
+import OrderType from "../types/order";
+import { ApiClient } from "../apis/apiClient";
 
 const columnsForOrder = ["번호", "주문코드", "총금액", "주문상태", "주문일시"];
 
 const AdminOrderList: React.FC = () => {
   const navigate = useNavigate();
 
-  const orders = [
-    {
-      orderIdx: 1,
-      orderId: "asdfa -13f1asfa-asdfe213",
-      totalPrice: 18700,
-      orderStatus: "수령 완료",
-      orderDate: "2024-04-30",
+  const { isLoading, data, refetch } = useQuery<OrderType[]>({
+    queryKey: ["orders"],
+    queryFn: () => {
+      return ApiClient.getInstance().getOrderList();
     },
-    {
-      orderIdx: 2,
-      orderId: "a65se1-6a84esf1-6a5se1f",
-      totalPrice: 0,
-      orderStatus: "수령 완료",
-      orderDate: "2024-04-30",
-    },
-  ];
+  });
+
   const handleDelete = (index: number) => {
     console.log(`Delete item at index ${index}`);
   };
 
   const handleEdit = (index: number) => {
-    const orderIdx = orders[index]?.orderId;
+    console.log(data![index]?.orderIdx);
+    const orderIdx = data![index]?.orderIdx;
     if (orderIdx !== undefined) {
       navigate(`/adminOrderEdit/${orderIdx}`);
       console.log(`Edit item at index ${orderIdx}`);
@@ -39,16 +34,16 @@ const AdminOrderList: React.FC = () => {
 
   return (
     <div>
-      {orders.length === 0 || orders == null ? (
+      {data == null || data.length === 0 ? (
         <p>주문목록이 없습니다</p>
       ) : (
         <div className="mx-auto p-4 max-w-screen-lg flex flex-col items-start">
           <h2 className="m-2 text-sm">
-            총 <p className="text-red-500 inline-block">{orders.length}</p>건의
+            총 <p className="text-red-500 inline-block">{data.length}</p>건의
             주문이 있습니다.
           </h2>
           <ListTable
-            tableData={orders.map((order, index) => [
+            tableData={data.map((order, index) => [
               index + 1,
               order.orderId,
               order.totalPrice,
