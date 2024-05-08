@@ -7,15 +7,15 @@ const CustomModal = ({
   modalToggle,
   modalToggle2,
   menu,
+  openModal2,
   setCountFunc,
-  fromRecommend,
 }: {
   message: string;
   modalToggle: () => void;
-  modalToggle2: () => void;
+  modalToggle2?: () => void;
   menu: BasketMenuType;
+  openModal2?: boolean;
   setCountFunc: () => void;
-  fromRecommend: boolean;
 }) => {
   const [temper, setTemper] = useState("HOT");
   const [size, setSize] = useState("Tall");
@@ -32,8 +32,8 @@ const CustomModal = ({
 
   const clickClose = () => {
     modalToggle();
-    if (fromRecommend) {
-      modalToggle2();
+    if (openModal2) {
+      modalToggle2!();
     }
   };
 
@@ -56,32 +56,33 @@ const CustomModal = ({
     });
     setCountFunc();
     modalToggle();
-    if (fromRecommend) {
-      modalToggle2();
+    if (openModal2) {
+      modalToggle2!();
     }
   };
 
   return (
     <div className="fixed flex flex-col justify-center items-center w-[585px] h-full bg-black bg-opacity-50">
-      <div className="relative flex flex-col w-5/6 h-5/6 rounded-xl bg-white gap-6">
-        <div className="absolute top-2 left-[465px] w-full justify-end">
+      <div className="relative flex flex-col w-[95%] h-[95%] rounded-xl bg-white gap-4">
+        <div className="absolute top-2 left-[535px] w-full justify-end">
           <img
             className="flex w-3 h-3 cursor-pointer"
             src="./../../public/img/closeWhite.png"
             onClick={() => clickClose()}
           />
         </div>
-        <div className="flex flex-col justify-center bg-starbucksGreen text-white w-full h-24">
+        <div className="flex flex-col justify-center bg-starbucksGreen text-white text-xl w-full h-24">
           {message}
         </div>
+
         {/* 온도영역 */}
-        <div className="flex flex-col px-8">
+        <div className="flex flex-col px-6">
           <p className="flex font-bold items-center">온도</p>
           <div className="mt-3 flex gap-6">
             <div
               className={
                 temper == "HOT"
-                  ? "flex rounded-lg justify-center items-center cursor-pointer bg-red-500 w-32 h-32"
+                  ? "flex rounded-lg justify-center items-center cursor-pointer bg-red-700 text-white w-32 h-32"
                   : "flex rounded-lg justify-center items-center cursor-pointer bg-starbucksBeige w-32 h-32"
               }
               onClick={() => clickTemp("HOT")}
@@ -91,7 +92,7 @@ const CustomModal = ({
             <div
               className={
                 temper == "ICE"
-                  ? "flex rounded-lg justify-center items-center cursor-pointer bg-blue-700 w-32 h-32"
+                  ? "flex rounded-lg justify-center items-center cursor-pointer bg-blue-700 text-white w-32 h-32"
                   : "flex rounded-lg justify-center items-center cursor-pointer bg-starbucksBeige w-32 h-32"
               }
               onClick={() => clickTemp("ICE")}
@@ -100,8 +101,9 @@ const CustomModal = ({
             </div>
           </div>
         </div>
+
         {/* 사이즈영역 */}
-        <div className="flex flex-col px-8">
+        <div className="flex flex-col px-6 mt-4">
           <p className="flex font-bold items-center">컵 선택</p>
           <div className="mt-3 flex gap-6">
             <div
@@ -169,9 +171,15 @@ const CustomModal = ({
             </div>
           </div>
         </div>
-        <div className="flex justify-center items-center w-full">
+        <div className="absolute bottom-0 mb-2 px-6 flex justify-center items-center gap-4 w-full">
           <div
-            className="mt-12 flex justify-center align-middle items-center rounded-lg text-white bg-starbucksGreen w-2/3 h-10 cursor-pointer"
+            className="flex justify-center align-middle items-center rounded-lg text-white bg-danger w-2/3 h-10 cursor-pointer"
+            onClick={() => clickConfirm()}
+          >
+            뒤로 가기
+          </div>
+          <div
+            className="flex justify-center align-middle items-center rounded-lg text-white bg-starbucksGreen w-2/3 h-10 cursor-pointer"
             onClick={() => clickConfirm()}
           >
             선택 완료

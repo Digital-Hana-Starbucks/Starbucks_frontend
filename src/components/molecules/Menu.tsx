@@ -3,38 +3,34 @@ import { BasketMenuType, MenuType } from "../../types/menu";
 import { useSession } from "../../hooks/basketContext";
 
 interface IProps {
-  menuIdx: number;
-  menuName: string;
-  menuImage: string;
-  menuPrice: number;
-  categoryIdx: number;
+  menu: MenuType;
   setOpenModalFunc: () => void;
+  setOpenModalFunc2?: () => void;
   setMenuFunc: (menu: BasketMenuType) => void;
   count: number;
   setCountFunc: () => void;
+  openModal2?: boolean;
 }
 
 const Menu: FC<IProps> = ({
-  menuIdx,
-  menuName,
-  menuImage,
-  menuPrice,
-  categoryIdx,
+  menu,
   setOpenModalFunc,
+  setOpenModalFunc2,
   setMenuFunc,
   count,
   setCountFunc,
+  openModal2,
 }) => {
   const { addBasket } = useSession();
 
   const MenuClick = () => {
-    if (categoryIdx == 4 || categoryIdx == 5) {
+    if (menu.categoryIdx == 4 || menu.categoryIdx == 5) {
       addBasket({
         basketIdx: count,
-        menuIdx: menuIdx,
-        menuName: menuName,
-        menuPrice: menuPrice,
-        menuImage: menuImage,
+        menuIdx: menu.menuIdx,
+        menuName: menu.menuName,
+        menuPrice: menu.menuPrice,
+        menuImage: menu.menuImage,
         orderDetailCount: 1,
       });
       setCountFunc();
@@ -43,30 +39,36 @@ const Menu: FC<IProps> = ({
 
     setMenuFunc({
       basketIdx: count,
-      menuIdx: menuIdx,
-      menuName: menuName,
-      menuPrice: menuPrice,
-      menuImage: menuImage,
+      menuIdx: menu.menuIdx,
+      menuName: menu.menuName,
+      menuPrice: menu.menuPrice,
+      menuImage: menu.menuImage,
       orderDetailCount: 1,
     });
 
+    console.log(openModal2);
+
+    if (openModal2) {
+      setOpenModalFunc2!();
+    }
     setOpenModalFunc();
   };
 
   return (
-    <div>
-      <div className="px-2 py-1 h-full" onClick={() => MenuClick()}>
-        <img className="rounded-xl w-32 h-32 cursor-pointer" src={menuImage} />
-        <div className="flex flex-col justify-between h-20">
-          <p className="font-medium text-left line-clamp-2 cursor-pointer">
-            {menuName}
-          </p>
-          <p className="font-medium inline-block text-left w-full cursor-pointer">
-            {menuPrice.toLocaleString() + "원"}
-          </p>
-        </div>
+    <li className="flex flex-col py-1 w-32 h-full" onClick={() => MenuClick()}>
+      <img
+        className="rounded-xl w-32 h-32 cursor-pointer"
+        src={menu.menuImage}
+      />
+      <div className="flex flex-col justify-between h-20">
+        <p className="font-medium text-left line-clamp-2 cursor-pointer">
+          {menu.menuName}
+        </p>
+        <p className="font-medium inline-block text-left cursor-pointer">
+          {menu.menuPrice.toLocaleString() + "원"}
+        </p>
       </div>
-    </div>
+    </li>
   );
 };
 
