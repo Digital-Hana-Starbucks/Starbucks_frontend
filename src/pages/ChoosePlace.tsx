@@ -23,13 +23,13 @@ const ChoosePlace = () => {
       <div className="flex gap-6">
         <button
           className="text-[32px] font-semibold text-white bg-starbucksGreen w-60 h-80 rounded-2xl"
-          onClick={() => navigate("/order")}
+          onClick={() => navigate("/menu")}
         >
           먹고가기
         </button>
         <button
           className="text-[32px] font-semibold text-white bg-starbucksGreen w-60 h-80 rounded-2xl"
-          onClick={() => navigate("/order")}
+          onClick={() => navigate("/menu")}
         >
           포장하기
         </button>
