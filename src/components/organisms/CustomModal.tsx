@@ -7,15 +7,15 @@ const CustomModal = ({
   modalToggle,
   modalToggle2,
   menu,
-  openModal2,
   setCountFunc,
+  fromRecommend,
 }: {
   message: string;
   modalToggle: () => void;
   modalToggle2?: () => void;
   menu: BasketMenuType;
-  openModal2?: boolean;
   setCountFunc: () => void;
+  fromRecommend?: boolean;
 }) => {
   const [temper, setTemper] = useState("HOT");
   const [size, setSize] = useState("Tall");
@@ -32,9 +32,10 @@ const CustomModal = ({
 
   const clickClose = () => {
     modalToggle();
-    if (openModal2) {
+    if (fromRecommend) {
       modalToggle2!();
     }
+    setCountFunc();
   };
 
   const clickConfirm = () => {
@@ -56,7 +57,8 @@ const CustomModal = ({
     });
     setCountFunc();
     modalToggle();
-    if (openModal2) {
+
+    if (fromRecommend) {
       modalToggle2!();
     }
   };
@@ -67,34 +69,32 @@ const CustomModal = ({
         <div className="absolute top-2 left-[535px] w-full justify-end">
           <img
             className="flex w-3 h-3 cursor-pointer"
-            src="./../../public/img/closeWhite.png"
+            src="/img/closeWhite.png"
             onClick={() => clickClose()}
           />
         </div>
         <div className="flex flex-col justify-center bg-starbucksGreen text-white text-xl w-full h-24">
           {message}
         </div>
-
+        <div className="flex justify-center">
+          <p className="text-lg">{menu.menuName}</p>
+        </div>
         {/* 온도영역 */}
         <div className="flex flex-col px-6">
           <p className="flex font-bold items-center">온도</p>
           <div className="mt-3 flex gap-6">
             <div
-              className={
-                temper == "HOT"
-                  ? "flex rounded-lg justify-center items-center cursor-pointer bg-red-700 text-white w-32 h-32"
-                  : "flex rounded-lg justify-center items-center cursor-pointer bg-starbucksBeige w-32 h-32"
-              }
+              className={`flex rounded-lg justify-center items-center cursor-pointer w-32 h-32 ${
+                temper == "HOT" ? "bg-red-700 text-white" : "bg-starbucksBeige"
+              }`}
               onClick={() => clickTemp("HOT")}
             >
               HOT
             </div>
             <div
-              className={
-                temper == "ICE"
-                  ? "flex rounded-lg justify-center items-center cursor-pointer bg-blue-700 text-white w-32 h-32"
-                  : "flex rounded-lg justify-center items-center cursor-pointer bg-starbucksBeige w-32 h-32"
-              }
+              className={`flex rounded-lg justify-center items-center cursor-pointer w-32 h-32 ${
+                temper == "ICE" ? "bg-blue-700 text-white" : "bg-starbucksBeige"
+              }`}
               onClick={() => clickTemp("ICE")}
             >
               ICE
@@ -107,17 +107,12 @@ const CustomModal = ({
           <p className="flex font-bold items-center">컵 선택</p>
           <div className="mt-3 flex gap-6">
             <div
-              className={
-                size == "Tall"
-                  ? "flex flex-col pt-3 rounded-lg justify-center items-center cursor-pointer bg-starbucksBeige w-32 h-32 border-2 border-starbucksGreen"
-                  : "flex flex-col pt-3 rounded-lg justify-center items-center cursor-pointer bg-starbucksBeige w-32 h-32"
-              }
+              className={`flex flex-col pt-3 rounded-lg justify-center items-center cursor-pointer bg-starbucksBeige w-32 h-32 ${
+                size == "Tall" && "border-2 border-starbucksGreen"
+              }`}
               onClick={() => clickSize("Tall")}
             >
-              <img
-                className="flex w-12 h-12"
-                src="./../../public/img/grande.png"
-              />
+              <img className="flex w-12 h-12" src="/img/grande.png" />
               <p
                 className={
                   size == "Tall" ? "flex font-bold" : "flex font-normal"
@@ -128,17 +123,12 @@ const CustomModal = ({
               <p className="flex">355ml</p>
             </div>
             <div
-              className={
-                size == "Grande"
-                  ? "flex flex-col pt-2 rounded-lg justify-center items-center cursor-pointer bg-starbucksBeige w-32 h-32 border-2 border-starbucksGreen"
-                  : "flex flex-col pt-2 rounded-lg justify-center items-center cursor-pointer bg-starbucksBeige w-32 h-32"
-              }
+              className={`flex flex-col pt-2 rounded-lg justify-center items-center cursor-pointer bg-starbucksBeige w-32 h-32 ${
+                size == "Grande" && "border-2 border-starbucksGreen"
+              }`}
               onClick={() => clickSize("Grande")}
             >
-              <img
-                className="flex w-14 h-14"
-                src="./../../public/img/grande.png"
-              />
+              <img className="flex w-14 h-14" src="/img/grande.png" />
               <p
                 className={
                   size == "Grande" ? "flex font-bold" : "flex font-normal"
@@ -149,17 +139,12 @@ const CustomModal = ({
               <p className="flex">473ml</p>
             </div>
             <div
-              className={
-                size == "Venti"
-                  ? "flex flex-col pt-1 rounded-lg justify-center items-center cursor-pointer bg-starbucksBeige w-32 h-32 border-2 border-starbucksGreen"
-                  : "flex flex-col pt-1 rounded-lg justify-center items-center cursor-pointer bg-starbucksBeige w-32 h-32"
-              }
+              className={`flex flex-col pt-1 rounded-lg justify-center items-center cursor-pointer bg-starbucksBeige w-32 h-32 ${
+                size == "Venti" && "border-2 border-starbucksGreen"
+              }`}
               onClick={() => clickSize("Venti")}
             >
-              <img
-                className="flex w-16 h-16"
-                src="./../../public/img/grande.png"
-              />
+              <img className="flex w-16 h-16" src="/img/grande.png" />
               <p
                 className={
                   size == "Venti" ? "flex font-bold" : "flex font-normal"
@@ -171,10 +156,21 @@ const CustomModal = ({
             </div>
           </div>
         </div>
+        <div className="flex justify-end mt-14 pr-10">
+          <p className="font-semibold text-xl">
+            {size == "Tall"
+              ? menu.menuPrice.toLocaleString()
+              : size == "Grande"
+              ? (menu.menuPrice + 500).toLocaleString()
+              : (menu.menuPrice + 1000).toLocaleString()}
+            원
+          </p>
+        </div>
+        {/* 버튼 영역 */}
         <div className="absolute bottom-0 mb-2 px-6 flex justify-center items-center gap-4 w-full">
           <div
             className="flex justify-center align-middle items-center rounded-lg text-white bg-danger w-2/3 h-10 cursor-pointer"
-            onClick={() => clickConfirm()}
+            onClick={() => clickClose()}
           >
             뒤로 가기
           </div>

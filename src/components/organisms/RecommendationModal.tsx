@@ -11,27 +11,31 @@ const RecommendationModal = ({
   modalToggle,
   modalToggle2,
   setMenuFunc,
-  openModal2,
   count,
   setCountFunc,
+  fromRecommend,
+  setFromRecommendFunc,
 }: {
   message: string;
   modalToggle: () => void;
   modalToggle2: () => void;
-  setMenuFunc: () => void;
-  openModal2?: boolean;
+  setMenuFunc: (menu: BasketMenuType) => void;
   count: number;
   setCountFunc: () => void;
+  fromRecommend: boolean;
+  setFromRecommendFunc: () => void;
 }) => {
   const navigate = useNavigate();
 
   const clickConfirm = () => {
     modalToggle2();
+    setFromRecommendFunc();
     navigate("/checkOrder");
   };
 
   const clickClose = () => {
     modalToggle2();
+    setFromRecommendFunc();
   };
 
   const { isLoading, data } = useQuery({
@@ -62,14 +66,14 @@ const RecommendationModal = ({
             setOpenModalFunc={() => modalToggle()}
             setOpenModalFunc2={() => modalToggle2()}
             count={count}
-            openModal2={openModal2}
             setCountFunc={setCountFunc}
+            fromRecommend={fromRecommend}
           />
         </div>
         <div className="absolute bottom-0 mb-2 px-6 flex justify-center items-center gap-4 w-full">
           <div
             className="flex justify-center align-middle items-center rounded-lg text-white bg-danger w-2/3 h-10 cursor-pointer"
-            onClick={() => clickConfirm()}
+            onClick={() => clickClose()}
           >
             뒤로 가기
           </div>

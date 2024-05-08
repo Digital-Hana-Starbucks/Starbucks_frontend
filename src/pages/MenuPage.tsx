@@ -7,7 +7,6 @@ import { CategoryType } from "../types/category";
 import CustomModal from "../components/organisms/CustomModal";
 import { BasketMenuType } from "../types/menu";
 import { useSession } from "../hooks/basketContext";
-import BasketMenu from "../components/molecules/BasketMenu";
 import BasketCard from "../components/organisms/BasketCard";
 import RecommendationModal from "../components/organisms/RecommendationModal";
 
@@ -16,6 +15,7 @@ const MenuPage = () => {
   const [categoryList, setCategoryList] = useState<CategoryType[]>([]);
   const [openModal, setOpenModal] = useState(false);
   const [openModal2, setOpenModal2] = useState(false);
+  const [fromRecommend, setFromRecommend] = useState(false);
   const [selectedMenu, setSelectedMenu] = useState<BasketMenuType>();
   const [count, setCount] = useState<number>(1);
 
@@ -42,11 +42,11 @@ const MenuPage = () => {
   };
 
   const setOpenModalFunc = () => {
-    setOpenModal(true);
+    setOpenModal(!openModal);
   };
 
   const setOpenModal2Func = () => {
-    setOpenModal2(true);
+    setOpenModal2(!openModal2);
   };
 
   const setMenuFunc = (menu: BasketMenuType) => {
@@ -57,11 +57,16 @@ const MenuPage = () => {
     setCount(count + 1);
   };
 
+  const setFromRecommendFunc = () => {
+    setFromRecommend(!fromRecommend);
+  };
+
   const clickConfirm = () => {
     if (basket.basketList.length == 0) {
       return;
     }
     setOpenModal2(!openModal2);
+    setFromRecommend(!fromRecommend);
   };
 
   return (
@@ -75,7 +80,7 @@ const MenuPage = () => {
               modalToggle2={() => setOpenModal2(!openModal2)}
               menu={selectedMenu!}
               setCountFunc={setCountFunc}
-              openModal2={openModal2}
+              fromRecommend={fromRecommend}
             />
           )}
           {openModal2 && (
@@ -83,20 +88,17 @@ const MenuPage = () => {
               message="더 맛있는 메뉴를 확인해보세요!"
               modalToggle={() => setOpenModal(!openModal)}
               modalToggle2={() => setOpenModal2Func()}
-              setMenuFunc={setCountFunc}
-              openModal2={openModal2}
+              setMenuFunc={setMenuFunc}
               count={count}
               setCountFunc={setCountFunc}
+              fromRecommend={fromRecommend}
+              setFromRecommendFunc={() => setFromRecommendFunc()}
             />
           )}
         </div>
       </div>
       <div className="flex justify-center items-center bg-starbucksGreen h-[15vh]">
-        <img
-          className="h-full w-full"
-          src="./../../public/img/banner.png"
-          alt="banner"
-        />
+        <img className="h-full w-full" src="/img/banner.png" alt="banner" />
       </div>
 
       <div className="flex-row grid grid-cols-4 gap-2 bg-starbucksBeige h-[55vh] ">
