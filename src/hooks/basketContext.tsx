@@ -80,10 +80,16 @@ const reducer = (basket: BasketType, { type, payload }: Action): BasketType => {
 
     case "plusMenu":
       for (let i = 0; i < basket.basketList.length; i++) {
-        let menu = basket.basketList[i];
+        let menu = { ...basket.basketList[i] };
         if (menu.basketIdx == payload) {
-          newer = [...basket.basketList];
-          newer[i].orderDetailCount++;
+          i == basket.basketList.length - 1
+            ? (newer = basket.basketList.slice(0, i))
+            : (newer = [
+                ...basket.basketList.slice(0, i),
+                ...basket.basketList.slice(i + 1, basket.basketList.length),
+              ]);
+          menu.orderDetailCount = basket.basketList[i].orderDetailCount + 1;
+          newer.splice(i, 0, menu);
           newer2 += menu.menuPrice;
           break;
         }
@@ -92,10 +98,16 @@ const reducer = (basket: BasketType, { type, payload }: Action): BasketType => {
 
     case "minusMenu":
       for (let i = 0; i < basket.basketList.length; i++) {
-        let menu = basket.basketList[i];
+        let menu = { ...basket.basketList[i] };
         if (menu.basketIdx == payload) {
-          newer = [...basket.basketList];
-          newer[i].orderDetailCount--;
+          i == basket.basketList.length - 1
+            ? (newer = basket.basketList.slice(0, i))
+            : (newer = [
+                ...basket.basketList.slice(0, i),
+                ...basket.basketList.slice(i + 1, basket.basketList.length),
+              ]);
+          menu.orderDetailCount = basket.basketList[i].orderDetailCount - 1;
+          newer.splice(i, 0, menu);
           newer2 -= menu.menuPrice;
           break;
         }

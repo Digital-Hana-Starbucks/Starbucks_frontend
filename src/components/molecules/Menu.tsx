@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { BasketMenuType, MenuType } from "../../types/menu";
-import { useSession } from "../../context/basketContext";
+import { useSession } from "../../hooks/basketContext";
 
 interface IProps {
   menuIdx: number;

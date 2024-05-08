@@ -1,20 +1,24 @@
 import React, { useRef, useState } from "react";
 import { BasketMenuType } from "../../types/menu";
-import { useSession } from "../../context/basketContext";
+import { useSession } from "../../hooks/basketContext";
 
 const CustomModal = ({
   message,
   modalToggle,
+  modalToggle2,
   menu,
   setCountFunc,
+  fromRecommend,
 }: {
   message: string;
   modalToggle: () => void;
+  modalToggle2: () => void;
   menu: BasketMenuType;
   setCountFunc: () => void;
+  fromRecommend: boolean;
 }) => {
-  const [temper, setTemper] = useState("hot");
-  const [size, setSize] = useState("tall");
+  const [temper, setTemper] = useState("HOT");
+  const [size, setSize] = useState("Tall");
 
   const { addBasket } = useSession();
 
@@ -26,10 +30,17 @@ const CustomModal = ({
     setSize(clickedSize);
   };
 
+  const clickClose = () => {
+    modalToggle();
+    if (fromRecommend) {
+      modalToggle2();
+    }
+  };
+
   const clickConfirm = () => {
-    if (size == "grande") {
+    if (size == "Grande") {
       menu.menuPrice += 500;
-    } else if (size == "venti") {
+    } else if (size == "Venti") {
       menu.menuPrice += 1000;
     }
 
@@ -45,6 +56,9 @@ const CustomModal = ({
     });
     setCountFunc();
     modalToggle();
+    if (fromRecommend) {
+      modalToggle2();
+    }
   };
 
   return (
@@ -54,7 +68,7 @@ const CustomModal = ({
           <img
             className="flex w-3 h-3 cursor-pointer"
             src="./../../public/img/closeWhite.png"
-            onClick={() => modalToggle()}
+            onClick={() => clickClose()}
           />
         </div>
         <div className="flex flex-col justify-center bg-starbucksGreen text-white w-full h-24">
@@ -66,21 +80,21 @@ const CustomModal = ({
           <div className="mt-3 flex gap-6">
             <div
               className={
-                temper == "hot"
+                temper == "HOT"
                   ? "flex rounded-lg justify-center items-center cursor-pointer bg-red-500 w-32 h-32"
                   : "flex rounded-lg justify-center items-center cursor-pointer bg-starbucksBeige w-32 h-32"
               }
-              onClick={() => clickTemp("hot")}
+              onClick={() => clickTemp("HOT")}
             >
               HOT
             </div>
             <div
               className={
-                temper == "ice"
+                temper == "ICE"
                   ? "flex rounded-lg justify-center items-center cursor-pointer bg-blue-700 w-32 h-32"
                   : "flex rounded-lg justify-center items-center cursor-pointer bg-starbucksBeige w-32 h-32"
               }
-              onClick={() => clickTemp("ice")}
+              onClick={() => clickTemp("ICE")}
             >
               ICE
             </div>
@@ -92,11 +106,11 @@ const CustomModal = ({
           <div className="mt-3 flex gap-6">
             <div
               className={
-                size == "tall"
+                size == "Tall"
                   ? "flex flex-col pt-3 rounded-lg justify-center items-center cursor-pointer bg-starbucksBeige w-32 h-32 border-2 border-starbucksGreen"
                   : "flex flex-col pt-3 rounded-lg justify-center items-center cursor-pointer bg-starbucksBeige w-32 h-32"
               }
-              onClick={() => clickSize("tall")}
+              onClick={() => clickSize("Tall")}
             >
               <img
                 className="flex w-12 h-12"
@@ -104,7 +118,7 @@ const CustomModal = ({
               />
               <p
                 className={
-                  size == "tall" ? "flex font-bold" : "flex font-normal"
+                  size == "Tall" ? "flex font-bold" : "flex font-normal"
                 }
               >
                 톨
@@ -113,11 +127,11 @@ const CustomModal = ({
             </div>
             <div
               className={
-                size == "grande"
+                size == "Grande"
                   ? "flex flex-col pt-2 rounded-lg justify-center items-center cursor-pointer bg-starbucksBeige w-32 h-32 border-2 border-starbucksGreen"
                   : "flex flex-col pt-2 rounded-lg justify-center items-center cursor-pointer bg-starbucksBeige w-32 h-32"
               }
-              onClick={() => clickSize("grande")}
+              onClick={() => clickSize("Grande")}
             >
               <img
                 className="flex w-14 h-14"
@@ -125,7 +139,7 @@ const CustomModal = ({
               />
               <p
                 className={
-                  size == "grande" ? "flex font-bold" : "flex font-normal"
+                  size == "Grande" ? "flex font-bold" : "flex font-normal"
                 }
               >
                 그란데
@@ -134,11 +148,11 @@ const CustomModal = ({
             </div>
             <div
               className={
-                size == "venti"
+                size == "Venti"
                   ? "flex flex-col pt-1 rounded-lg justify-center items-center cursor-pointer bg-starbucksBeige w-32 h-32 border-2 border-starbucksGreen"
                   : "flex flex-col pt-1 rounded-lg justify-center items-center cursor-pointer bg-starbucksBeige w-32 h-32"
               }
-              onClick={() => clickSize("venti")}
+              onClick={() => clickSize("Venti")}
             >
               <img
                 className="flex w-16 h-16"
@@ -146,7 +160,7 @@ const CustomModal = ({
               />
               <p
                 className={
-                  size == "venti" ? "flex font-bold" : "flex font-normal"
+                  size == "Venti" ? "flex font-bold" : "flex font-normal"
                 }
               >
                 벤티

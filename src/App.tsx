@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Outlet } from "react-router-dom";
 import "./App.css";
-import { BasketProvider } from "./context/basketContext";
+import { BasketProvider } from "./hooks/basketContext";
 
 const queryClient = new QueryClient();
 
