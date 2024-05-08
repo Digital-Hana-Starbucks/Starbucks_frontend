@@ -9,7 +9,7 @@ interface IProps {
   setMenuFunc: (menu: BasketMenuType) => void;
   count: number;
   setCountFunc: () => void;
-  openModal2?: boolean;
+  fromRecommend?: boolean;
 }
 
 const Menu: FC<IProps> = ({
@@ -19,7 +19,7 @@ const Menu: FC<IProps> = ({
   setMenuFunc,
   count,
   setCountFunc,
-  openModal2,
+  fromRecommend,
 }) => {
   const { addBasket } = useSession();
 
@@ -46,9 +46,7 @@ const Menu: FC<IProps> = ({
       orderDetailCount: 1,
     });
 
-    console.log(openModal2);
-
-    if (openModal2) {
+    if (fromRecommend) {
       setOpenModalFunc2!();
     }
     setOpenModalFunc();
