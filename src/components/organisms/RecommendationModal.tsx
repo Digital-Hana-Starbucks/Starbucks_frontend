@@ -81,7 +81,7 @@ const RecommendationModal = ({
             className="flex justify-center align-middle items-center rounded-lg text-white bg-starbucksGreen w-2/3 h-10 cursor-pointer"
             onClick={() => clickConfirm()}
           >
-            선택 완료
+            선택 안함
           </div>
         </div>
       </div>

@@ -38,13 +38,16 @@ const Order = () => {
       try {
         orderMutation.mutateAsync(orderList);
         console.log("결제 완료");
-        navigate("/completion");
+        const timeout2 = setTimeout(() => {
+          navigate("/completion");
+        }, 3000);
+        return () => clearTimeout(timeout2);
       } catch (error) {
         console.log(error);
         setOpenModal(true);
         setErrorMessage("결제를 실패 했습니다.");
       }
-    }, 3000);
+    }, 1000);
 
     return () => clearTimeout(timeout);
   }, []);

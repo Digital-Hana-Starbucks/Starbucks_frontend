@@ -18,6 +18,7 @@ const BasketCard: FC<IProps> = ({ basketList }) => {
               menuPrice={menu.menuPrice}
               menuName={menu.menuName}
               menuImage={menu.menuImage}
+              menuTemperature={menu.menuTemperature}
               orderDetailCount={menu.orderDetailCount}
             />
           </li>

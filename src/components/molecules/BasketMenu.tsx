@@ -48,7 +48,9 @@ const BasketMenu: FC<IProps> = ({
       <div className="flex w-full">
         <img className="w-14 h-16 rounded-xl" src={menuImage} />
         <div className="pl-2 py-1 flex flex-col justify-between w-full">
-          <p className="flex text-left text-sm line-clamp-1">{menuName}</p>
+          <p className="flex text-left text-sm">
+            {menuName} {menuTemperature}
+          </p>
           <div className="flex w-full justify-between">
             <p className="text-sm">
               {(menuPrice * orderDetailCount).toLocaleString()}원
