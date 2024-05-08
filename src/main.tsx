@@ -15,6 +15,8 @@ import AdminUserEdit from "./pages/AdminUserEdit";
 import AdminOrderList from "./pages/AdminOrderList";
 import AdminOrderEdit from "./pages/AdminOrderEdit";
 import Admin from "./pages/Admin";
+import OrderCompletion from "./pages/OrderCompletion";
+import Order from "./pages/Order";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +28,8 @@ const router = createBrowserRouter([
       { path: "choosePlace", element: <ChoosePlace /> },
       { path: "login", element: <Login /> },
       { path: "signup", element: <Signup /> },
+      { path: "order", element: <Order /> },
+      { path: "completion", element: <OrderCompletion /> },
       { path: "adminMenuList", element: <AdminMenuList /> },
       { path: "adminMenuEdit/:idx", element: <AdminMenuEdit /> },
       { path: "adminUserList", element: <AdminUserList /> },
