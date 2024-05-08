@@ -46,7 +46,7 @@ const EditForm: React.FC<Props> = ({ data, onSave, labels }) => {
 
   return (
     <div>
-      <div className="p-2 m-2">
+      <div className="m-2 table-auto border-collapse rounded-[7px] overflow-hidden bg-white  ">
         {labels.map((labelInfo, index) => (
           <EditFormField
             key={index}

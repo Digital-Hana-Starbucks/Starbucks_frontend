@@ -4,10 +4,9 @@ import ListTable from "../components/organisms/ListTable";
 import { useMutation, useQuery } from "react-query";
 import UserType from "../types/user";
 import { ApiClient } from "../apis/apiClient";
+import { PAGE_SIZE } from "../utils/constant";
 
 const columnsForUser = ["번호", "아이디", "암호", "이름", "권한", "가입일"];
-const PAGE_SIZE = 10;
-
 const AdminUserList: React.FC = () => {
   const navigate = useNavigate();
   const { isLoading, data, error, refetch } = useQuery<UserType[]>({

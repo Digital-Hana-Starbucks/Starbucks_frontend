@@ -5,6 +5,7 @@ import { useMutation, useQuery } from "react-query";
 import { ApiClient } from "../apis/apiClient";
 import { OrderType } from "../types/order";
 import { formatter } from "../utils/dateTimeformat";
+import { PAGE_SIZE } from "../utils/constant";
 
 const columnsForOrder = [
   "번호",
@@ -14,7 +15,6 @@ const columnsForOrder = [
   "상태",
   "주문일시",
 ];
-const PAGE_SIZE = 10;
 
 const AdminOrderList: React.FC = () => {
   const navigate = useNavigate();

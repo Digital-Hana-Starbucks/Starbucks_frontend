@@ -57,7 +57,7 @@ const EditFormField: React.FC<Props<any>> = ({
   };
 
   return (
-    <div className="flex items-center border">
+    <div className="flex items-center border ">
       <label
         className="block text-gray-700 text-sm font-bold mb-2 mr-4 p-2"
         style={{ width: "20%" }}

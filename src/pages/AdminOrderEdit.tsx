@@ -39,8 +39,8 @@ const AdminUserEdit: React.FC = () => {
   ];
 
   return (
-    <div>
-      <h1 className="text-2xl m-2">주문 정보 수정</h1>
+    <div className="bg-starbucksBeige min-h-screen overflow-y-auto">
+      <h1 className="text-2xl m-5">주문 정보 수정</h1>
       <EditForm data={data} onSave={handleSave} labels={labels} />
     </div>
   );

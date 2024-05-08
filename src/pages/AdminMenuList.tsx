@@ -4,9 +4,9 @@ import ListTable from "../components/organisms/ListTable";
 import { useMutation, useQuery } from "react-query";
 import { ApiClient } from "../apis/apiClient";
 import { MenuType } from "../types/menu";
+import { PAGE_SIZE } from "../utils/constant";
 
 const columnsForMenu = ["번호", "이름", "가격", "이미지", "카테고리"];
-const PAGE_SIZE = 10;
 
 const getCategory = (categoryIdx: number) => {
   switch (categoryIdx) {

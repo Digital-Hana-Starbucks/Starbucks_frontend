@@ -15,7 +15,7 @@ const ListTable: React.FC<Props> = ({
   onEdit,
 }) => {
   return (
-    <table className="table-auto border-collapse w-full border p-2 m-2 rounded-[15px] overflow-hidden bg-white">
+    <table className="table-auto border-collapse w-full border p-2 m-2 rounded-[7px] overflow-hidden bg-white ">
       <thead>
         <tr className="text-sm">
           {columns.map((column, index) => (

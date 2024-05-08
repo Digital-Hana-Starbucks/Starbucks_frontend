@@ -12,9 +12,9 @@ const Admin: React.FC = () => {
   };
 
   return (
-    <div className="p-4 min-h-screen h-full  bg-starbucksBeige">
+    <div className="h-screen bg-starbucksBeige flex flex-col p-2">
       <h1 className="text-2xl font-bold text-gray-900 mb-5">관리자 페이지</h1>
-      <div className="grid grid-cols-5 ">
+      <div className="grid grid-cols-5 pb-5">
         <div></div>
         <AdminNav
           id="user"
@@ -36,7 +36,7 @@ const Admin: React.FC = () => {
         />
         <div></div>
       </div>
-      <div>
+      <div className="overflow-y-auto">
         {selectedPage === "menu" && <AdminMenuList />}{" "}
         {selectedPage === "user" && <AdminUserList />}{" "}
         {selectedPage === "order" && <AdminOrderList />}{" "}

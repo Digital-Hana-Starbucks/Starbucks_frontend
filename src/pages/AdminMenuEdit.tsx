@@ -33,7 +33,7 @@ const AdminMenuEdit: React.FC = () => {
 
   const buildFormData = (
     updatedMenu: MenuType,
-    newMenuImg: File | undefined
+    newMenuImg: File | undefined,
   ) => {
     const formData = new FormData();
     const newData: UpdatedMenuType = {
@@ -60,8 +60,8 @@ const AdminMenuEdit: React.FC = () => {
   ];
 
   return (
-    <div>
-      <h1 className="text-3xl m-2">상품 정보 수정</h1>
+    <div className="bg-starbucksBeige min-h-screen overflow-y-auto">
+      <h1 className="text-3xl m-5">상품 정보 수정</h1>
       {data && <EditForm data={data} onSave={handleSave} labels={labels} />}
     </div>
   );
