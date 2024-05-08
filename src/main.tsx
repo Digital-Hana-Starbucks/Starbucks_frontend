@@ -17,6 +17,7 @@ import AdminOrderEdit from "./pages/AdminOrderEdit";
 import Admin from "./pages/Admin";
 import OrderCompletion from "./pages/OrderCompletion";
 import Order from "./pages/Order";
+import MenuPage from "./pages/MenuPage";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
       { path: "choosePlace", element: <ChoosePlace /> },
       { path: "login", element: <Login /> },
       { path: "signup", element: <Signup /> },
+      { path: "menu", element: <MenuPage /> },
       { path: "order", element: <Order /> },
       { path: "completion", element: <OrderCompletion /> },
       { path: "adminMenuList", element: <AdminMenuList /> },

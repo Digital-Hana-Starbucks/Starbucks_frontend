@@ -1,4 +1,4 @@
-type MenuType = {
+export type MenuType = {
   menuIdx: number;
   menuId: string;
   menuName: string;
@@ -7,18 +7,24 @@ type MenuType = {
   menuDate: string;
   categoryIdx: number;
 };
-type BasketMenuType = {
+export type BasketMenuType = {
   basketIdx: number;
   menuIdx: number;
+  menuName: string;
+  menuPrice: number;
+  menuImage: string;
   orderDetailCount: number;
   menuTemperature?: string | null;
   menuSize?: string | null;
 };
 
-type UpdatedMenuType = {
+export type UpdatedMenuType = {
   menuName: string;
   menuPrice: number;
   categoryIdx: number;
 };
 
-export { MenuType, BasketMenuType, UpdatedMenuType };
+export type BasketType = {
+  totalPrice: number;
+  basketList: BasketMenuType[];
+};

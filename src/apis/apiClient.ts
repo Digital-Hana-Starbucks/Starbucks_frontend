@@ -7,6 +7,7 @@ import { OrderType, updateOrderType } from "../types/order";
 import { orderApi } from "./interfaces/orderApi";
 import { UserType, LoginType, SignupType } from "../types/user";
 import { userApi } from "./interfaces/userApi";
+import { CategoryType } from "../types/category";
 
 export class ApiClient implements menuApi, orderApi, userApi {
   private static instance: ApiClient;
@@ -21,6 +22,20 @@ export class ApiClient implements menuApi, orderApi, userApi {
     const response = await this.axiosInstance.request<MenuType[]>({
       method: "get",
       url: `/products`,
+    });
+    return response.data;
+  }
+  async getCategoryMenuList(categoryIdx: number) {
+    const response = await this.axiosInstance.request<MenuType[]>({
+      method: "get",
+      url: `/products/category/${categoryIdx}`,
+    });
+    return response.data;
+  }
+  async getCategoryList() {
+    const response = await this.axiosInstance.request<CategoryType[]>({
+      method: "get",
+      url: `/products/category`,
     });
     return response.data;
   }
