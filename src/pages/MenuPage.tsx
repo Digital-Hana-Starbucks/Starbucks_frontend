@@ -16,7 +16,6 @@ const MenuPage = () => {
   const [categoryList, setCategoryList] = useState<CategoryType[]>([]);
   const [openModal, setOpenModal] = useState(false);
   const [openModal2, setOpenModal2] = useState(false);
-  const [fromRecommend, setFromRecommend] = useState(false);
   const [selectedMenu, setSelectedMenu] = useState<BasketMenuType>();
   const [count, setCount] = useState<number>(1);
 
@@ -76,16 +75,16 @@ const MenuPage = () => {
               modalToggle2={() => setOpenModal2(!openModal2)}
               menu={selectedMenu!}
               setCountFunc={setCountFunc}
-              fromRecommend={fromRecommend}
+              openModal2={openModal2}
             />
           )}
           {openModal2 && (
             <RecommendationModal
               message="더 맛있는 메뉴를 확인해보세요!"
               modalToggle={() => setOpenModal(!openModal)}
-              modalToggle2={() => setOpenModal2(!openModal2)}
+              modalToggle2={() => setOpenModal2Func()}
               setMenuFunc={setCountFunc}
-              setFromRecommend={() => setFromRecommend(!fromRecommend)}
+              openModal2={openModal2}
               count={count}
               setCountFunc={setCountFunc}
             />
@@ -116,7 +115,7 @@ const MenuPage = () => {
           </ul>
         </div>
         {/* 메뉴 선택 영역 */}
-        <div className="col-span-3">
+        <div className="col-span-3 mt-1 h-[55vh]">
           <MenuCard
             data={data}
             setMenuFunc={setMenuFunc}

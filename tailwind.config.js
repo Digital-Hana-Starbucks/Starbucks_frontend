@@ -9,7 +9,10 @@ export default {
         danger: "#DC3545",
         primary: "0000FF",
       },
-      fontSize: {},
+      screens: {
+        menuPick: "435px",
+        recommendationModal: "554px",
+      },
     },
   },
   plugins: [],
