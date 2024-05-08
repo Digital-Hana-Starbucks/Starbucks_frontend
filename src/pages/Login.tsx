@@ -3,7 +3,7 @@ import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { ApiClient } from "../apis/apiClient";
 import { LoginType } from "../types/user";
-import AlertModal from "../components/molecule/AlertModal";
+import AlertModal from "../components/molecules/AlertModal";
 import { setCookie } from "../utils/cookie";
 
 const Login = () => {

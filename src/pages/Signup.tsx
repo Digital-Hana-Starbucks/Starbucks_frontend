@@ -3,7 +3,7 @@ import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { SignupType } from "../types/user";
 import { ApiClient } from "../apis/apiClient";
-import AlertModal from "../components/molecule/AlertModal";
+import AlertModal from "../components/molecules/AlertModal";
 
 const Signup = () => {
   const navigate = useNavigate();
