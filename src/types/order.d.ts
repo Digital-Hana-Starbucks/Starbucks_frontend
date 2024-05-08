@@ -1,4 +1,4 @@
-type OrderType = {
+export type OrderType = {
   userIdx: number | null;
   userNickname: string | null;
   orderIdx: number;
@@ -8,8 +8,13 @@ type OrderType = {
   orderDate: string;
 };
 
-type updateOrderType = {
+export type updateOrderType = {
   orderStatus: string;
 };
 
-export { OrderType, updateOrderType };
+export type createOrderType = {
+  menuIdx: number;
+  orderDetailCount: number;
+  menuTemperature: string | null;
+  menuSize: string | null;
+};
