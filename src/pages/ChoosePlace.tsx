@@ -5,17 +5,17 @@ const ChoosePlace = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="relative flex flex-col justify-center items-center h-[90vh] gap-6 bg-starbucksBeige">
+    <section className="relative flex flex-col justify-center items-center h-[100vh] gap-6 bg-starbucksBeige">
       <img
         className="absolute top-4 right-4"
-        src="./../../public/img/close.png"
+        src="/img/close.png"
         alt="close"
         onClick={() => navigate("/checkUser")}
       />
       <div className="flex flex-col items-center gap-4">
         <img
           className="flex justify-center"
-          src="./../../public/img/logo.png"
+          src="/img/logo.png"
           alt="landing"
         />
         <p className="text-4xl font-semibold">서비스를 선택해주세요.</p>
