@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import BasketTable from "../components/organisms/BasketTable";
 import { useNavigate } from "react-router-dom";
 
-const OrderCheck = () => {
+const CheckOrder = () => {
   const navigate = useNavigate();
 
   const [clicked, setClicked] = useState(false);
 
   return (
-    <section className="relative h-screen flex flex-col gap-6">
+    <section className="relative h-screen flex flex-col gap-4">
       <div className="flex justify-center items-center h-24 bg-starbucksGreen">
         <p className="text-xl text-white">
           주문 확인 및 결제 방식을 선택해주세요.
@@ -18,7 +18,7 @@ const OrderCheck = () => {
         <p className="text-left font-semibold">주문 확인</p>
         <BasketTable />
       </div>
-      <div className="flex flex-col gap-2 mx-2">
+      <div className="flex flex-col gap-2 mx-2 mt-2">
         <p className="text-left font-semibold">결제 방식</p>
         <button
           className={`flex justify-center items-center w-36 h-40 rounded-2xl font-semibold ${
@@ -36,7 +36,10 @@ const OrderCheck = () => {
         >
           뒤로가기
         </button>
-        <button className="w-1/2 h-10 bg-starbucksGreen rounded-lg text-white">
+        <button
+          className="w-1/2 h-10 bg-starbucksGreen rounded-lg text-white"
+          onClick={() => navigate("/order")}
+        >
           결제하기
         </button>
       </div>
@@ -44,4 +47,4 @@ const OrderCheck = () => {
   );
 };
 
-export default OrderCheck;
+export default CheckOrder;

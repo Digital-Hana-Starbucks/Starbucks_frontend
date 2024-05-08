@@ -1,35 +1,37 @@
 import React from "react";
-import { useSession } from "../../context/basketContext";
+import { useSession } from "../../hooks/basketContext";
 
 const BasketTable = () => {
   const { basket } = useSession();
 
   return (
     <table className="ml-1">
-      <thead className="bg-starbucksBeige">
+      <thead className="table w-full bg-starbucksBeige">
         <tr>
-          <td className="text-left">메뉴</td>
+          <td className="text-left w-[284px]">메뉴</td>
           <td>사이즈</td>
           <td>수량</td>
-          <td>가격</td>
+          <td className="w-[80px]">가격</td>
         </tr>
       </thead>
-      <tbody className="h-48 max-h-48">
+      <tbody className="block h-48 overflow-y-scroll">
         {basket.basketList.map((item) => (
-          <tr>
-            <td className="text-left">{item.menuName}</td>
+          <tr className="table w-full h-8">
+            <td className="text-left w-[284px]">{item.menuName}</td>
             <td>{item.menuSize}</td>
             <td>{item.orderDetailCount}</td>
-            <td>{item.menuPrice}</td>
+            <td className="w-[78px]">
+              {item.menuPrice.toLocaleString("ko-KR")}원
+            </td>
           </tr>
         ))}
       </tbody>
-      <tfoot className="bg-starbucksBeige">
+      <tfoot className="table w-full bg-starbucksBeige">
         <tr>
-          <td className="text-left" colSpan={3}>
-            총 금액
+          <td className="text-left">총 금액</td>
+          <td className="text-right pr-5">
+            {basket.totalPrice.toLocaleString("ko-KR")}원
           </td>
-          <td>{basket.totalPrice}</td>
         </tr>
       </tfoot>
     </table>

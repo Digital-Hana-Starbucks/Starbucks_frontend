@@ -3,7 +3,7 @@ import { menuApi } from "./interfaces/menuApi";
 import { API_BASE_URL } from "./url";
 import { getCookie } from "../utils/cookie";
 import { MenuType } from "../types/menu";
-import { OrderType, updateOrderType } from "../types/order";
+import { OrderType, createOrderType, updateOrderType } from "../types/order";
 import { orderApi } from "./interfaces/orderApi";
 import { UserType, LoginType, SignupType } from "../types/user";
 import { userApi } from "./interfaces/userApi";
@@ -106,6 +106,15 @@ export class ApiClient implements menuApi, orderApi, userApi {
     return response.data;
   }
 
+  async createOrder(order: createOrderType[]) {
+    const response = await this.axiosInstance.request({
+      method: "post",
+      url: "/orders",
+      data: order,
+    });
+    return response.data;
+  }
+
   //-----------user
   async getUserList() {
     const response = await this.axiosInstance.request<UserType[]>({
@@ -162,15 +171,23 @@ export class ApiClient implements menuApi, orderApi, userApi {
     return response.data;
   }
 
-  registerToken(newToken: string) {
-    this.axiosInstance = this.createAxiosInstance(newToken);
+  async getPoint() {
+    const response = await this.axiosInstance.request({
+      method: "get",
+      url: "users/points",
+    });
+    return response.data;
   }
+
+  // registerToken(newToken: string) {
+  //   this.axiosInstance = this.createAxiosInstance(newToken);
+  // }
 
   logout() {
     this.axiosInstance = this.createAxiosInstance();
   }
 
-  private createAxiosInstance = (token?: string) => {
+  private createAxiosInstance = () => {
     const headers: any = {
       "content-type": "application/json",
     };
@@ -183,8 +200,8 @@ export class ApiClient implements menuApi, orderApi, userApi {
 
     newInstance.interceptors.request.use(
       (config) => {
-        if (token) {
-          const accessToken = getCookie(token);
+        const accessToken = getCookie("token");
+        if (accessToken) {
           config.headers["Authorization"] = `Bearer ${accessToken}`;
         }
 

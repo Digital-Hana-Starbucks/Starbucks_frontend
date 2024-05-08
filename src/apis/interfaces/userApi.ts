@@ -6,4 +6,5 @@ export interface userApi {
   getUser(userIdx: number): Promise<UserType>;
   updateUser(userIdx: number, updatedUser: UserType): Promise<void>;
   deleteUser(userIdx: number): Promise<void>;
+  getPoint(): Promise<void>;
 }
