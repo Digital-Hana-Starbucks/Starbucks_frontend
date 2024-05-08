@@ -110,7 +110,7 @@ export class ApiClient implements menuApi, orderApi, userApi {
   async getUserList() {
     const response = await this.axiosInstance.request<UserType[]>({
       method: "get",
-      url: `/users`,
+      url: `/users/admin`,
     });
     return response.data;
   }
@@ -118,7 +118,7 @@ export class ApiClient implements menuApi, orderApi, userApi {
   async getUser(userIdx: number) {
     const response = await this.axiosInstance.request<UserType>({
       method: "get",
-      url: `/users/${userIdx}`,
+      url: `/users/admin/${userIdx}`,
     });
     return response.data;
   }
