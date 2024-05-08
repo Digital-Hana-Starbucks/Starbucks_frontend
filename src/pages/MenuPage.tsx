@@ -6,14 +6,17 @@ import Category from "../components/ui/Category";
 import { CategoryType } from "../types/category";
 import CustomModal from "../components/organisms/CustomModal";
 import { BasketMenuType } from "../types/menu";
-import { useSession } from "../context/basketContext";
+import { useSession } from "../hooks/basketContext";
 import BasketMenu from "../components/molecules/BasketMenu";
 import BasketCard from "../components/organisms/BasketCard";
+import RecommendationModal from "../components/organisms/RecommendationModal";
 
 const MenuPage = () => {
   const [categoryIdx, setCategoryIdx] = useState<number>(1);
   const [categoryList, setCategoryList] = useState<CategoryType[]>([]);
   const [openModal, setOpenModal] = useState(false);
+  const [openModal2, setOpenModal2] = useState(false);
+  const [fromRecommend, setFromRecommend] = useState(false);
   const [selectedMenu, setSelectedMenu] = useState<BasketMenuType>();
   const [count, setCount] = useState<number>(1);
 
@@ -43,12 +46,23 @@ const MenuPage = () => {
     setOpenModal(true);
   };
 
+  const setOpenModal2Func = () => {
+    setOpenModal2(true);
+  };
+
   const setMenuFunc = (menu: BasketMenuType) => {
     setSelectedMenu(menu);
   };
 
   const setCountFunc = () => {
     setCount(count + 1);
+  };
+
+  const clickConfirm = () => {
+    if (basket.basketList.length == 0) {
+      return;
+    }
+    setOpenModal2(!openModal2);
   };
 
   return (
@@ -59,7 +73,20 @@ const MenuPage = () => {
             <CustomModal
               message={"선택하신 음료의 온도와 사이즈를 선택해주세요."}
               modalToggle={() => setOpenModal(!openModal)}
+              modalToggle2={() => setOpenModal2(!openModal2)}
               menu={selectedMenu!}
+              setCountFunc={setCountFunc}
+              fromRecommend={fromRecommend}
+            />
+          )}
+          {openModal2 && (
+            <RecommendationModal
+              message="더 맛있는 메뉴를 확인해보세요!"
+              modalToggle={() => setOpenModal(!openModal)}
+              modalToggle2={() => setOpenModal2(!openModal2)}
+              setMenuFunc={setCountFunc}
+              setFromRecommend={() => setFromRecommend(!fromRecommend)}
+              count={count}
               setCountFunc={setCountFunc}
             />
           )}
@@ -121,7 +148,7 @@ const MenuPage = () => {
             <div className="flex justify-center">
               <button
                 className="w-32 h-20 bg-starbucksGreen rounded-xl"
-                onClick={() => alert("검사")}
+                onClick={() => clickConfirm()}
               >
                 <p className="text-white">주문완료</p>
               </button>

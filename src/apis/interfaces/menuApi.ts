@@ -8,4 +8,5 @@ export interface menuApi {
   updateMenu(index: number, newMenu: FormData): Promise<void>;
   getCategoryMenuList(categoryIdx: number): Promise<MenuType[]>;
   getCategoryList(): Promise<CategoryType[]>;
+  getRecommendationList(): Promise<MenuType[]>;
 }
