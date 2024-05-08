@@ -10,6 +10,7 @@ interface IProps {
   openModal2?: boolean;
   count: number;
   setCountFunc: () => void;
+  fromRecommend?: boolean;
 }
 
 const MenuCard: FC<IProps> = ({
@@ -17,28 +18,31 @@ const MenuCard: FC<IProps> = ({
   setOpenModalFunc,
   setOpenModalFunc2,
   setMenuFunc,
-  openModal2,
   count,
   setCountFunc,
+  fromRecommend,
 }) => {
   return (
-    <ul
-      className={`grid bg-starbucksBeige w-full h-full overflow-y-scroll ${
-        openModal2 ? "grid-cols-4 gap-2" : "grid-cols-3"
+    <div
+      className={`grid bg-starbucksBeige w-full h-full ${
+        fromRecommend
+          ? "grid-cols-4 pl-1 gap-1 mt-4"
+          : "grid-cols-3 overflow-y-scroll"
       }`}
     >
-      {data?.map((menu: MenuType) => (
+      {data?.map((menu: MenuType, idx: number) => (
         <Menu
+          key={count * 7 * idx * menu.menuIdx}
           menu={menu}
           setOpenModalFunc={setOpenModalFunc}
           setOpenModalFunc2={() => setOpenModalFunc2!()}
           setMenuFunc={setMenuFunc}
           count={count}
           setCountFunc={setCountFunc}
-          openModal2={openModal2}
+          fromRecommend={fromRecommend}
         />
       ))}
-    </ul>
+    </div>
   );
 };
 
