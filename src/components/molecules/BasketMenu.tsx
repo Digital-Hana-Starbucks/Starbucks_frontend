@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { BasketMenuType, MenuType } from "../../types/menu";
-import { useSession } from "../../context/basketContext";
+import { useSession } from "../../hooks/basketContext";
 
 interface IProps {
   basketIdx: number;
@@ -55,7 +55,11 @@ const BasketMenu: FC<IProps> = ({
             </p>
             <div className="flex">
               <div
-                className="flex justify-center items-center w-5 h-5 border-2 border-gray-200 bg-white cursor-pointer"
+                className={
+                  orderDetailCount == 1
+                    ? "flex justify-center items-center w-5 h-5 border-2 border-gray-200 bg-slate-100"
+                    : "flex justify-center items-center w-5 h-5 border-2 border-gray-200 bg-white cursor-pointer"
+                }
                 onClick={() => clickMinus()}
               >
                 -

@@ -7,15 +7,17 @@ interface LabelInfo {
   key: string;
   label: string;
   editable: boolean;
+  type: string;
 }
 
 interface Props {
   data: any;
   onSave: (updatedData: any, img: File | undefined) => void;
   labels: LabelInfo[];
+  options?: { value: string | number; label: string }[];
 }
 
-const EditForm: React.FC<Props> = ({ data, onSave, labels }) => {
+const EditForm: React.FC<Props> = ({ data, onSave, labels, options }) => {
   const [formData, setFormData] = useState<any>(data || {});
   const [newMenuImg, setNewMenuImg] = useState<File | undefined>(undefined);
 
@@ -46,13 +48,15 @@ const EditForm: React.FC<Props> = ({ data, onSave, labels }) => {
 
   return (
     <div>
-      <div className="p-2 m-2">
+      <div className="m-2 table-auto border-collapse rounded-[7px] overflow-hidden bg-white  ">
         {labels.map((labelInfo, index) => (
           <EditFormField
             key={index}
             label={labelInfo.label}
             value={applyFormatter(formData[labelInfo.key], labelInfo.key)}
+            type={labelInfo.type}
             editable={labelInfo.editable}
+            options={options}
             onChange={(value: any) => handleChange(labelInfo.key, value)}
             onImageChange={
               labelInfo.key === "menuImage" ? handleImageChange : undefined

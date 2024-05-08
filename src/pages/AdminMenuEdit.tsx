@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { MenuType, UpdatedMenuType } from "../types/menu";
 import EditForm from "../components/organisms/EditForm";
+import { MenuType, UpdatedMenuType } from "../types/menu";
 import { useMutation, useQuery } from "react-query";
 import { ApiClient } from "../apis/apiClient";
 
@@ -10,12 +10,9 @@ const AdminMenuEdit: React.FC = () => {
   const location = useLocation();
   const index = location.pathname.split("/").pop();
 
-  const { isLoading, data } = useQuery({
+  const { isLoading, data } = useQuery<MenuType>({
     queryKey: ["menu", Number(index)],
-    queryFn: () => {
-      const res = ApiClient.getInstance().getMenu(Number(index));
-      return res;
-    },
+    queryFn: () => ApiClient.getInstance().getMenu(Number(index)),
   });
 
   const updateMenuMutation = useMutation(
@@ -30,8 +27,15 @@ const AdminMenuEdit: React.FC = () => {
   );
 
   const handleSave = (updatedMenu: MenuType, newMenuImg: File | undefined) => {
-    const formData = new FormData();
+    const formData = buildFormData(updatedMenu, newMenuImg);
+    updateMenuMutation.mutate(formData);
+  };
 
+  const buildFormData = (
+    updatedMenu: MenuType,
+    newMenuImg: File | undefined,
+  ) => {
+    const formData = new FormData();
     const newData: UpdatedMenuType = {
       menuName: updatedMenu.menuName,
       menuPrice: updatedMenu.menuPrice,
@@ -44,23 +48,37 @@ const AdminMenuEdit: React.FC = () => {
     if (newMenuImg) {
       formData.append("menuImg", newMenuImg);
     }
-
-    updateMenuMutation.mutate(formData);
+    return formData;
   };
 
   const labels = [
-    { key: "menuName", label: "이름", editable: true },
-    { key: "menuPrice", label: "가격", editable: true },
-    { key: "menuId", label: "상품 코드", editable: false },
-    { key: "menuImage", label: "이미지", editable: true },
-    { key: "categoryIdx", label: "카테고리", editable: true },
-    { key: "menuDate", label: "최종 수정 시간", editable: false },
+    { key: "menuName", label: "이름", editable: true, type: "text" },
+    { key: "menuPrice", label: "가격", editable: true, type: "number" },
+    { key: "menuId", label: "상품 코드", editable: false, type: "text" },
+    { key: "menuImage", label: "이미지", editable: true, type: "image" },
+    { key: "categoryIdx", label: "카테고리", editable: true, type: "select" },
+    { key: "menuDate", label: "최종 수정 시간", editable: false, type: "text" },
+  ];
+
+  const options = [
+    { value: 1, label: "에스프레소/콜드브루" },
+    { value: 2, label: "프라푸치노/블렌디드" },
+    { value: 3, label: "티바나" },
+    { value: 4, label: "케이크" },
+    { value: 5, label: "샌드위치/샐러드" },
   ];
 
   return (
-    <div>
-      <h1 className="text-3xl m-2">상품 정보 수정</h1>
-      {data && <EditForm data={data} onSave={handleSave} labels={labels} />}
+    <div className="bg-starbucksBeige min-h-screen overflow-y-auto">
+      <h1 className="text-3xl m-5">상품 정보 수정</h1>
+      {data && (
+        <EditForm
+          data={data}
+          onSave={handleSave}
+          labels={labels}
+          options={options}
+        />
+      )}
     </div>
   );
 };
