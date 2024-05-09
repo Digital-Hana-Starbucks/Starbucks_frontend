@@ -99,7 +99,7 @@ const AdminOrderList: React.FC = () => {
           </h2>
           <ListTable
             tableData={slicedData!.map((order, index) => [
-              index + 1,
+              startIndex + index + 1,
               findUserNickname(order.userNickname, index),
               order.orderId,
               order.totalPrice,

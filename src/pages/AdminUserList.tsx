@@ -61,7 +61,7 @@ const AdminUserList: React.FC = () => {
           </h2>
           <ListTable
             tableData={slicedData!.map((user, index) => [
-              index + 1,
+              startIndex + index + 1,
               user.userId,
               user.userPw.replace(/./g, "*").slice(0, 10),
               user.userNickname,

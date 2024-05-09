@@ -40,6 +40,10 @@ const AdminMenuList: React.FC = () => {
         alert("삭제 완료");
         refetch();
       },
+      onError: () => {
+        alert("주문 내역이 존재해 삭제가 불가능합니다.");
+        refetch();
+      },
     },
   );
 
