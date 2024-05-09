@@ -84,7 +84,7 @@ export class ApiClient implements menuApi, orderApi, userApi {
   async getOrderList() {
     const response = await this.axiosInstance.request<OrderType[]>({
       method: "get",
-      url: `/orders`,
+      url: `/orders/admin`,
     });
     return response.data;
   }
