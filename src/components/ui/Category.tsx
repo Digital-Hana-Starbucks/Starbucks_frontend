@@ -14,14 +14,14 @@ const Category: FC<IProps> = ({ categoryIdx, categoryName, onClick }) => {
   newName.substring(0, newName.length - 1);
 
   return (
-    <div className="p-2">
+    <li className="p-2">
       <button
         className="w-32 h-16 bg-white rounded-xl"
         onClick={() => onClick(categoryIdx)}
       >
         <p className="whitespace-pre">{newName}</p>
       </button>
-    </div>
+    </li>
   );
 };
 

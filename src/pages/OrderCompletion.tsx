@@ -27,6 +27,7 @@ const OrderCompletion = () => {
     const timeout = setTimeout(() => {
       navigate("/");
       removeCookie("token");
+      removeCookie("user");
     }, 3000);
     return () => clearTimeout(timeout);
   }, []);

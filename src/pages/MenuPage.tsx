@@ -9,6 +9,7 @@ import { BasketMenuType } from "../types/menu";
 import { useSession } from "../hooks/basketContext";
 import BasketCard from "../components/organisms/BasketCard";
 import RecommendationModal from "../components/organisms/RecommendationModal";
+import { getCookie } from "../utils/cookie";
 
 const MenuPage = () => {
   const [categoryIdx, setCategoryIdx] = useState<number>(1);
@@ -20,6 +21,8 @@ const MenuPage = () => {
   const [count, setCount] = useState<number>(1);
 
   const { basket, resetBasket } = useSession();
+
+  const token = getCookie("user");
 
   const { isLoading, data } = useQuery({
     queryKey: ["menus", categoryIdx],
@@ -104,15 +107,23 @@ const MenuPage = () => {
       <div className="flex-row grid grid-cols-4 gap-2 bg-starbucksBeige h-[55vh] ">
         {/* 메뉴 버튼 영역 */}
         <div>
-          <ul className="flex flex-col h-[50vh]">
+          {token && (
+            <div className="flex justify-center items-center w-32 h-16 bg-white text-starbucksGreen font-semibold rounded-xl m-2">
+              {token}
+            </div>
+          )}
+          <ul
+            className={`flex flex-col overflow-y-scroll scrollbar-hide ${
+              token ? "h-80" : "h-96"
+            }`}
+          >
             {categoryList?.map((category: CategoryType) => (
-              <li key={category.categoryIdx}>
-                <Category
-                  categoryIdx={category.categoryIdx}
-                  categoryName={category.categoryName}
-                  onClick={() => setCategoryIdxFunc(category.categoryIdx)}
-                />
-              </li>
+              <Category
+                key={category.categoryIdx}
+                categoryIdx={category.categoryIdx}
+                categoryName={category.categoryName}
+                onClick={() => setCategoryIdxFunc(category.categoryIdx)}
+              />
             ))}
           </ul>
         </div>
