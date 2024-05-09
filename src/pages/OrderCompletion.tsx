@@ -40,9 +40,9 @@ const OrderCompletion = () => {
       </div>
       {isToken && (
         <div className="flex">
-          <p className="text-starbucksGreen font-semibold pr-1">{point}</p>
-          <p className="text-starbucksGreen font-semibold">포인트</p>
-          <p>가 적립되었습니다.</p>
+          <p className="text-starbucksGreen font-semibold">보유 포인트는</p>
+          <p className="text-starbucksGreen font-semibold px-1">{point}</p>
+          <p>입니다.</p>
         </div>
       )}
     </section>
