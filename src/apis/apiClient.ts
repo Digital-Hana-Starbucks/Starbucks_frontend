@@ -179,10 +179,6 @@ export class ApiClient implements menuApi, orderApi, userApi {
     return response.data;
   }
 
-  // registerToken(newToken: string) {
-  //   this.axiosInstance = this.createAxiosInstance(newToken);
-  // }
-
   logout() {
     this.axiosInstance = this.createAxiosInstance();
   }
@@ -202,7 +198,7 @@ export class ApiClient implements menuApi, orderApi, userApi {
       (config) => {
         const accessToken = getCookie("token");
         if (accessToken) {
-          config.headers["Authorization"] = `Bearer ${accessToken}`;
+          config.headers["Authorization"] = `${accessToken}`;
         }
 
         config.headers["Content-Type"] = "application/json";
