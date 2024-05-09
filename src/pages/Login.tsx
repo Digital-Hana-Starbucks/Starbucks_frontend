@@ -36,6 +36,7 @@ const Login = () => {
       });
       console.log("로그인 성공!");
       setCookie("token", response.token);
+      setCookie("user", response.user.userId);
       if (response.user.userRole === "USER") {
         navigate("/choosePlace");
       } else {
@@ -43,6 +44,7 @@ const Login = () => {
       }
     } catch (error) {
       setErrorMessage("잘못되거나 없는 회원 정보입니다.");
+      setOpenModal(true);
       console.error("로그인 실패:", error);
     }
   };
