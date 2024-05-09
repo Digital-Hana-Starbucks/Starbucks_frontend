@@ -9,6 +9,8 @@ import { UserType, LoginType, SignupType } from "../types/user";
 import { userApi } from "./interfaces/userApi";
 import { CategoryType } from "../types/category";
 
+const ACCESSTOKEN = getCookie("token");
+
 export class ApiClient implements menuApi, orderApi, userApi {
   private static instance: ApiClient;
   private axiosInstance: AxiosInstance;
@@ -72,6 +74,7 @@ export class ApiClient implements menuApi, orderApi, userApi {
       method: "put",
       url: `/products/admin/${index}`,
       headers: {
+        Authorization: ACCESSTOKEN,
         "Content-Type": "multipart/form-data",
       },
       data: newMenu,
@@ -200,9 +203,8 @@ export class ApiClient implements menuApi, orderApi, userApi {
 
     newInstance.interceptors.request.use(
       (config) => {
-        const accessToken = getCookie("token");
-        if (accessToken) {
-          config.headers["Authorization"] = `Bearer ${accessToken}`;
+        if (ACCESSTOKEN) {
+          config.headers["Authorization"] = `${ACCESSTOKEN}`;
         }
 
         config.headers["Content-Type"] = "application/json";
