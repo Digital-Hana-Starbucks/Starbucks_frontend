@@ -9,8 +9,7 @@ export default {
         danger: "#DC3545",
         primary: "0000FF",
       },
-      fontSize: {},
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar-hide")],
 };

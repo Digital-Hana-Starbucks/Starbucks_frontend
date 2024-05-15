@@ -1,15 +1,20 @@
 import React from "react";
-import { QueryClient, QueryClientProvider } from "react-query";
 import { Outlet } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "react-query";
 import "./App.css";
+import { BasketProvider } from "./hooks/basketContext";
 
 const queryClient = new QueryClient();
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <Outlet />
-    </QueryClientProvider>
+    <React.StrictMode>
+      <BasketProvider>
+        <QueryClientProvider client={queryClient}>
+          <Outlet />
+        </QueryClientProvider>
+      </BasketProvider>
+    </React.StrictMode>
   );
 }
 
