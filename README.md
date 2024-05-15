@@ -10,7 +10,7 @@
 
 </p>
 
-## 👫 팀 소개
+## 👫 Member
 
 | 이름       | 역할   |
 | ---------- | ------ |
@@ -20,7 +20,7 @@
 
 <br/>
 
-## 💻 How to Use
+## 🚩 Project
 #### 랜딩페이지
 <img src="https://github.com/Digital-Hana-Starbucks/Starbucks_frontend/assets/31836035/729ff321-780b-4928-823a-c5fbc4c836e5" width="240" height="350" />
 
